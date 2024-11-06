@@ -1,1 +1,2 @@
+DROP TABLE IF EXISTS `brand`;
 DROP TABLE IF EXISTS `food`;
