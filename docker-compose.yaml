@@ -1,0 +1,31 @@
+# Docker is only used for development purposes
+services:
+    api:
+        container_name: my-food-app-api
+        build:
+            dockerfile: Dockerfile
+            context: ./api
+            target: dev
+        volumes:
+            - ./api:/app:rw,delegated
+        ports:
+            - 8181:8080
+            - 2345:2345
+        depends_on:
+            - db
+
+    db:
+        container_name: my-food-app-db
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: my_food_app
+            MYSQL_USER: my_food_app
+            MYSQL_PASSWORD: my_food_app
+        ports:
+            - 8306:3306
+        volumes:
+            - db_data:/var/lib/mysql
+
+volumes:
+    db_data:
