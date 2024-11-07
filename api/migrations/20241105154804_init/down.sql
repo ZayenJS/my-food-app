@@ -1,2 +1,7 @@
-DROP TABLE IF EXISTS `brand`;
-DROP TABLE IF EXISTS `food`;
+DROP TABLE IF EXISTS `brands`;
+DROP TABLE IF EXISTS `foods`;
+DROP TABLE IF EXISTS `recipes`;
+DROP TABLE IF EXISTS `recipe_ingredients`;
+DROP TABLE IF EXISTS `recipe_steps`;
+DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `recipe_tags`;

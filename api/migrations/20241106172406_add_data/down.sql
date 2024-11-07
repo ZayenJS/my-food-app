@@ -1,2 +1,3 @@
-TRUNCATE TABLE `brand`;
-TRUNCATE TABLE `food`;
+TRUNCATE TABLE `brands`;
+TRUNCATE TABLE `foods`;
+TRUNCATE TABLE `tags`;

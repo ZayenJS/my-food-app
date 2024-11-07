@@ -37,20 +37,20 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 );
 
 CREATE TABLE IF NOT EXISTS `recipe_ingredients` (
-  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
   `food_id` INT NOT NULL REFERENCES `foods`(`id`),
   `quantity` INT NOT NULL,
   `unit` VARCHAR(50) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`recipe_id`, `food_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `recipe_steps` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
-  `step_number` INT NOT NULL,
-  `description` TEXT NOT NULL,
+  `order` INT NOT NULL,
+  `text` TEXT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 );
@@ -61,4 +61,12 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `color` VARCHAR(7) DEFAULT '#fff',
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `recipe_tags` (
+  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
+  `tag_id` INT NOT NULL REFERENCES `tags`(`id`),
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`recipe_id`, `tag_id`)
 );

@@ -1,4 +1,4 @@
-package food
+package models
 
 import (
 	"fmt"
@@ -25,12 +25,12 @@ type Food struct {
 	UpdatedAt    *string `json:"updatedAt"`
 }
 
-func TableName() string {
+func FoodTableName() string {
 	return "foods"
 }
 
-func GetAll(limit int, offset int) ([]Food, error) {
-	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` LIMIT ? OFFSET ?", TableName()))
+func GetAllFoods(limit int, offset int) ([]Food, error) {
+	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` LIMIT ? OFFSET ?", FoodTableName()))
 
 	if err != nil {
 		return nil, err
@@ -58,8 +58,8 @@ func GetAll(limit int, offset int) ([]Food, error) {
 	return foods, nil
 }
 
-func GetByName(name string, limit int, offset int) ([]Food, error) {
-	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` WHERE `name` LIKE ? LIMIT ? OFFSET ?", TableName()))
+func GetFoodsByName(name string, limit int, offset int) ([]Food, error) {
+	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` WHERE `name` LIKE ? LIMIT ? OFFSET ?", FoodTableName()))
 
 	if err != nil {
 		return nil, err

@@ -1,28 +1,19 @@
-INSERT INTO `brand` (`id`, `name`)
+INSERT INTO `brands` (`id`, `name`)
 VALUES
 (1,'Nestle'),
-(2, 'Carrefour'),
-(3, 'Danone'),
-(4, 'Coca Cola'),
-(5, 'Pepsi'),
-(6, 'Lays'),
-(7, 'Pringles'),
-(8, 'Kinder'),
-(9, 'Ferrero'),
-(10, 'Oreo'),
-(11, 'Kikkoman'),
-(12, 'Maille');
+(2, 'Carrefour');
 
-INSERT INTO `food` (`name`, `brand_id`, `calories`, `protein`, `carbs`, `sugar`, `fat`, `saturated_fat`, `fiber`, `sodium`, `image_url`, `category`)
+INSERT INTO `foods` (`id`,`name`, `brand_id`, `calories`, `protein`, `carbs`, `sugar`, `fat`, `saturated_fat`, `fiber`, `sodium`, `image_url`, `category`)
 VALUES
-('Nesquik', 1, 100, 3, 20, 15, 1, 0, 0, 0, '', 'drink'),
-('Actimel', 3, 50, 3, 10, 5, 1, 0, 0, 0, '', 'drink'),
-('Coca Cola', 4, 150, 0, 40, 40, 0, 0, 0, 0, '', 'drink'),
-('Pepsi', 5, 150, 0, 40, 40, 0, 0, 0, 0, '', 'drink'),
-('Lays', 6, 200, 2, 20, 0, 10, 2, 0, 0, '', 'snack'),
-('Pringles', 7, 200, 2, 20, 0, 10, 2, 0, 0, '', 'snack'),
-('Kinder Bueno', 8, 200, 2, 20, 0, 10, 2, 0, 0, '', 'snack'),
-('Ferrero Rocher', 9, 200, 2, 20, 0, 10, 2, 0, 0, '', 'snack'),
-('Oreo', 10, 200, 2, 20, 0, 10, 2, 0, 0, '', 'snack'),
-('Soy Sauce', 11, 0, 0, 0, 0, 0, 0, 0, 0, '', 'condiment'),
-('Mustard', 12, 0, 0, 0, 0, 0, 0, 0, 0, '', 'condiment');
+(1, 'Farine T150', 2, 350, 10, 70, 0, 1, 0, 3, 0, '', 'Pâtisserie'),
+(2, 'Sucre', 2, 400, 0, 100, 100, 0, 0, 0, 0, '', 'Pâtisserie'),
+(3, 'Levure', 2, 0, 0, 0, 0, 0, 0, 0, 0, '', 'Pâtisserie'),
+(4, 'Lait', 2, 50, 5, 5, 5, 5, 5, 5, 5, '', 'Produit laitier'),
+(5, 'Beurre', 2, 500, 0, 0, 0, 50, 50, 0, 0, '', 'Produit laitier'),
+(6, 'Oeuf', 2, 100, 10, 0, 0, 10, 10, 0, 0, '', 'Produit laitier'),
+(7, 'Chocolat', 2, 500, 10, 50, 50, 50, 50, 0, 0, '', 'Pâtisserie');
+
+INSERT INTO `tags` (`id`, `name`, `color`)
+VALUES
+(1, "Dessert", "#F1B"),
+(2, "Epicerie sucrée", "#F94");

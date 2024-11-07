@@ -4,8 +4,6 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"     // swagger embed files
-	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
 func Setup() *gin.Engine {
@@ -18,9 +16,10 @@ func Setup() *gin.Engine {
 	}
 
 	engine := gin.Default()
-	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	setupFoodRoutes(engine)
+	setupRecipeRoutes(engine)
+	setupTagRoutes(engine)
 
 	return engine
 }

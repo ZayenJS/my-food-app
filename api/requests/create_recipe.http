@@ -1,0 +1,76 @@
+POST http://localhost:8181/recipe
+Content-Type: application/json
+
+{
+  "name":"Gâteau au chocolat",
+  "description":"Un gâteau au chocolat",
+  "difficulty":2,
+  "prep_time":30,
+  "cook_time":30,
+  "servings":8,
+  "image_url":"https://www.example.com/gateau.jpg",
+  "ingredients":[
+    {
+      "food_id": 7,
+      "quantity": 200,
+      "unit": "g"
+    },
+    {
+      "food_id": 1,
+      "quantity": 100,
+      "unit": "g"
+    },
+    {
+      "food_id": 2,
+      "quantity": 100,
+      "unit": "g"
+    },
+    {
+      "food_id": 5,
+      "quantity": 100,
+      "unit": "g"
+    },
+    {
+      "food_id": 6,
+      "quantity": 150,
+      "unit": "g"
+    }
+  ],
+
+  "steps":[
+    {
+      "text":"Préchauffer le four à 180°C",
+      "order": 1
+    },
+    {
+      "text":"Faire fondre le chocolat au bain-marie",
+      "order": 2
+    },
+    {
+      "text": "Mélanger le beurre et le sucre",
+      "order": 3
+    },
+    {
+      "text": "Ajouter les oeufs un par un",
+      "order": 4
+    },
+    {
+      "text": "Ajouter la farine et la levure",
+      "order": 5
+    },
+    {
+      "text": "Ajouter le chocolat fondu",
+      "order": 6
+    },
+    {
+      "text": "Verser la pâte dans un moule",
+      "order": 7
+    },
+    {
+      "text": "Enfourner 30 minutes",
+      "order": 8
+    }
+  ],
+
+  "tags": [1,2]
+}
