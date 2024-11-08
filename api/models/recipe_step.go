@@ -18,7 +18,7 @@ func RecipeStepTableName() string {
 	return "recipe_steps"
 }
 
-func RecipeStepFromDTO(recipeId int, stepDto dto.StepDTO) *RecipeStep {
+func RecipeStepFromDTO(recipeId int, stepDto *dto.StepDTO) *RecipeStep {
 	return &RecipeStep{
 		RecipeId: recipeId,
 		Text:     stepDto.Text,
@@ -26,26 +26,28 @@ func RecipeStepFromDTO(recipeId int, stepDto dto.StepDTO) *RecipeStep {
 	}
 }
 
-func (recipeStep *RecipeStep) Save() (*RecipeStep, error) {
+func (recipeStep *RecipeStep) Save() error {
 	stmt, err := database.Db.Prepare("INSERT INTO recipe_steps (recipe_id, text, `order`) VALUES (?, ?, ?)")
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	_, err = stmt.Exec(recipeStep.RecipeId, recipeStep.Text, recipeStep.Order)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	stmt, err = database.Db.Prepare("SELECT id FROM recipe_steps WHERE recipe_id = ? AND `order` = ?")
 
 	if err != nil {
-		return nil, err
+		return err
 	}
+
+	defer stmt.Close()
 
 	err = stmt.QueryRow(recipeStep.RecipeId, recipeStep.Order).Scan(&recipeStep.Id)
 
-	return recipeStep, err
+	return err
 }

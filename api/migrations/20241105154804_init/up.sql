@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `brands` (
 CREATE TABLE IF NOT EXISTS `foods` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255) NOT NULL UNIQUE,
-  `brand_id` INT NOT NULL REFERENCES `brands`(`id`),
+  `brand_id` INT NOT NULL REFERENCES `brands`(`id`) ON DELETE CASCADE,
   `calories` INT NOT NULL,
   `protein` INT NOT NULL,
   `carbs` INT NOT NULL,
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `difficulty` INT NOT NULL,
   `prep_time` INT NOT NULL,
   `cook_time` INT NOT NULL,
+  `rest_time` INT NOT NULL,
   `servings` INT NOT NULL,
   `image_url` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 );
 
 CREATE TABLE IF NOT EXISTS `recipe_ingredients` (
-  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
-  `food_id` INT NOT NULL REFERENCES `foods`(`id`),
+  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`) ON DELETE CASCADE,
+  `food_id` INT NOT NULL REFERENCES `foods`(`id`) ON DELETE CASCADE,
   `quantity` INT NOT NULL,
   `unit` VARCHAR(50) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `recipe_ingredients` (
 
 CREATE TABLE IF NOT EXISTS `recipe_steps` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
+  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`) ON DELETE CASCADE,
   `order` INT NOT NULL,
   `text` TEXT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,8 +65,8 @@ CREATE TABLE IF NOT EXISTS `tags` (
 );
 
 CREATE TABLE IF NOT EXISTS `recipe_tags` (
-  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`),
-  `tag_id` INT NOT NULL REFERENCES `tags`(`id`),
+  `recipe_id` INT NOT NULL REFERENCES `recipes`(`id`) ON DELETE CASCADE,
+  `tag_id` INT NOT NULL REFERENCES `tags`(`id`) ON DELETE CASCADE,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`recipe_id`, `tag_id`)

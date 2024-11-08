@@ -2,27 +2,28 @@ POST http://localhost:8181/recipe
 Content-Type: application/json
 
 {
-  "name":"Gâteau au chocolat",
-  "description":"Un gâteau au chocolat",
-  "difficulty":2,
-  "prep_time":30,
+  "name":"Brownie cheesecake",
+  "description":"Un gâteau au chocolat et au fromage",
+  "difficulty":4,
+  "prep_time":15,
   "cook_time":30,
-  "servings":8,
+  "rest_time":0,
+  "servings":6,
   "image_url":"https://www.example.com/gateau.jpg",
   "ingredients":[
     {
       "food_id": 7,
-      "quantity": 200,
+      "quantity": 120,
       "unit": "g"
     },
     {
-      "food_id": 1,
-      "quantity": 100,
+      "food_id": 10,
+      "quantity": 80,
       "unit": "g"
     },
     {
-      "food_id": 2,
-      "quantity": 100,
+      "food_id": 9,
+      "quantity": 150,
       "unit": "g"
     },
     {
@@ -31,44 +32,33 @@ Content-Type: application/json
       "unit": "g"
     },
     {
-      "food_id": 6,
-      "quantity": 150,
+      "food_id": 8,
+      "quantity": 200,
+      "unit": "g"
+    },
+    {
+      "food_id": 2,
+      "quantity": 110,
       "unit": "g"
     }
   ],
 
   "steps":[
     {
-      "text":"Préchauffer le four à 180°C",
+      "text":"Préchauffer le four à 150°C (thermostat 5). Dans un saladier fouettez vivement le fromage frais avec l'oeuf, ajoutez le sucre puis la farine. Vous devez obternir une pâte bien lisse et plutôt liquide.",
       "order": 1
     },
     {
-      "text":"Faire fondre le chocolat au bain-marie",
+      "text":"Faire fondre le chocolat avec le beurre. Mélanger avec une maryse et laisser la chaleur résiduelle faire fondre le chocolat. Ajouter le sucre et mélanger. Incorporer les oeufs un par un en mélangeant bien entre chaque ajout et enfin ajouter la farine.",
       "order": 2
     },
     {
-      "text": "Mélanger le beurre et le sucre",
+      "text": "Dans un moule carré ou rectangulaire, verser la moitié de la pâte au fromage frais. Ajouter la moitié de la pâte au chocolat. Recommencer l'opération en terminant par la pâte au chocolat. Avec un couteau, mélanger les deux pâtes pour obtenir un effet marbré.",
       "order": 3
     },
     {
-      "text": "Ajouter les oeufs un par un",
-      "order": 4
-    },
-    {
-      "text": "Ajouter la farine et la levure",
-      "order": 5
-    },
-    {
-      "text": "Ajouter le chocolat fondu",
-      "order": 6
-    },
-    {
-      "text": "Verser la pâte dans un moule",
-      "order": 7
-    },
-    {
       "text": "Enfourner 30 minutes",
-      "order": 8
+      "order": 4
     }
   ],
 

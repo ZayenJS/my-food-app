@@ -11,7 +11,10 @@ VALUES
 (4, 'Lait', 2, 50, 5, 5, 5, 5, 5, 5, 5, '', 'Produit laitier'),
 (5, 'Beurre', 2, 500, 0, 0, 0, 50, 50, 0, 0, '', 'Produit laitier'),
 (6, 'Oeuf', 2, 100, 10, 0, 0, 10, 10, 0, 0, '', 'Produit laitier'),
-(7, 'Chocolat', 2, 500, 10, 50, 50, 50, 50, 0, 0, '', 'Pâtisserie');
+(7, 'Chocolat', 2, 500, 10, 50, 50, 50, 50, 0, 0, '', 'Pâtisserie'),
+(8, "Saint Môret", 2, 200, 10, 10, 10, 10, 10, 10, 10, '', 'Produit laitier'),
+(9, "Erythritol", 2, 0, 0, 0, 0, 0, 0, 0, 0, '', 'Epicerie sucrée'),
+(10, "Farine T110", 2, 300, 10, 60, 0, 1, 0, 3, 0, '', 'Pâtisserie');
 
 INSERT INTO `tags` (`id`, `name`, `color`)
 VALUES

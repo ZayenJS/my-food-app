@@ -16,25 +16,27 @@ func RecipeTagTableName() string {
 	return "recipe_tags"
 }
 
-func RecipeTagFromDTO(recipeId int, tagId int) *RecipeTag {
+func RecipeTagFromIds(recipeId int, tagId int) *RecipeTag {
 	return &RecipeTag{
 		RecipeId: recipeId,
 		TagId:    tagId,
 	}
 }
 
-func (recipeTag *RecipeTag) Save() (*RecipeTag, error) {
+func (recipeTag *RecipeTag) Save() error {
 	stmt, err := database.Db.Prepare("INSERT INTO recipe_tags (recipe_id, tag_id) VALUES (?, ?)")
 
 	if err != nil {
-		return nil, err
+		return err
 	}
+
+	defer stmt.Close()
 
 	_, err = stmt.Exec(recipeTag.RecipeId, recipeTag.TagId)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return recipeTag, nil
+	return nil
 }

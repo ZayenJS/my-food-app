@@ -2,3 +2,4 @@ go-migrate.config.json
 build
 API
 **/*.env
+tmp

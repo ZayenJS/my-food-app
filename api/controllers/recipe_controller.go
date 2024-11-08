@@ -1,46 +1,56 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
-	"time"
 
 	"github.com/ZayenJS/dto"
-	"github.com/ZayenJS/models"
+	"github.com/ZayenJS/repository"
+	response "github.com/ZayenJS/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateRecipe(c *gin.Context) {
-	var recipeDto dto.RecipeDTO
+	var recipeDto dto.CreateRecipeDTO
+	response := response.New(c)
 	if err := c.ShouldBindJSON(&recipeDto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		response.Error(http.StatusBadRequest, err)
 		return
 	}
 
-	now := time.Now().Format("2000-01-01 00:00:00")
+	recipeRepository := repository.NewRecipeRepository()
+	err := recipeRepository.Create(&recipeDto)
 
-	recipe := models.RecipeFromDTO(recipeDto)
-	recipe.CreatedAt = now
-	recipe.UpdatedAt = nil
-
-	recipe.Save()
-
-	for _, ingredientDto := range recipeDto.Ingredients {
-		recipeIngredient := models.RecipeIngredientFromDTO(recipe.Id, ingredientDto)
-		recipeIngredient.CreatedAt = now
-		recipeIngredient.Save()
+	if err != nil {
+		response.Error(http.StatusInternalServerError, err)
+		return
 	}
 
-	for _, stepDto := range recipeDto.Steps {
-		recipeStep := models.RecipeStepFromDTO(recipe.Id, stepDto)
-		recipeStep.CreatedAt = now
-		recipeStep.Save()
+	response.JSON(http.StatusCreated, gin.H{"status": "created"})
+}
+
+func SearchRecipesByName(c *gin.Context) {
+	name := c.Query("name")
+	response := response.New(c)
+
+	if name == "" {
+		err := errors.New("name is required")
+		response.Error(http.StatusBadRequest, err)
+		return
 	}
 
-	for _, tagId := range recipeDto.Tags {
-		recipeTag := models.RecipeTagFromDTO(recipe.Id, tagId)
-		recipeTag.CreatedAt = now
-		recipeTag.Save()
+	recipes, err := repository.NewRecipeRepository().SearchByName(name)
+
+	if err != nil {
+		response.Error(http.StatusInternalServerError, err)
+		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"status": "created"})
+	if len(recipes) == 0 {
+		err = errors.New("no recipes found")
+		response.Error(http.StatusNotFound, err)
+		return
+	}
+
+	response.JSON(http.StatusOK, recipes)
 }

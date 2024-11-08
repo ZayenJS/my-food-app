@@ -8,4 +8,5 @@ import (
 func setupRecipeRoutes(engine *gin.Engine) {
 	recipe := engine.Group("/recipe")
 	recipe.POST("/", controllers.CreateRecipe)
+	recipe.GET("/", controllers.SearchRecipesByName)
 }

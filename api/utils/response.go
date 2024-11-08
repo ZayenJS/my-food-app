@@ -1,6 +1,9 @@
 package response
 
 import (
+	"fmt"
+	"runtime"
+
 	"github.com/ZayenJS/config"
 	"github.com/gin-gonic/gin"
 )
@@ -20,23 +23,31 @@ func (response *Response) JSON(status int, data interface{}) {
 func (response *Response) Error(status int, err error) {
 	isDevMode := config.Get("ENV") == "development"
 
+	data := make(map[string]interface{})
+	errorMessage := "An unexpected error occurred"
+
 	switch status {
 	case 404:
-		if isDevMode {
-			response.context.JSON(status, gin.H{"error": err.Error()})
-			return
-		}
-
-		response.context.JSON(status, gin.H{"error": "Resource not found"})
-		return
+		errorMessage = "Resource not found"
 	case 500:
-		if isDevMode {
-			response.context.JSON(status, gin.H{"error": err.Error()})
-			return
-		}
-
-		response.context.JSON(status, gin.H{"error": "Internal server error"})
-		return
+		errorMessage = "Internal server error"
 	}
 
+	data["error"] = errorMessage
+
+	if isDevMode {
+		data["error"] = err.Error()
+		data["trace"] = printStackTrace()
+	}
+
+	response.context.JSON(status, data)
+}
+
+func printStackTrace() string {
+	// Create a byte slice to hold the stack trace
+	stackTrace := make([]byte, 1024)
+	// Capture the stack trace
+	n := runtime.Stack(stackTrace, true)
+	// Print the stack trace
+	return fmt.Sprintf("Stack trace:%s", string(stackTrace[:n]))
 }
