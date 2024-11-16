@@ -62,7 +62,7 @@ func (r *RecipeRepository) Create(recipeDto *dto.CreateRecipeDTO) error {
 	return nil
 }
 
-func (r *RecipeRepository) SearchByName(name string) ([]dto.RecipeForUIDTO, error) {
+func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
 			r.id,
@@ -77,7 +77,8 @@ func (r *RecipeRepository) SearchByName(name string) ([]dto.RecipeForUIDTO, erro
 			r.created_at,
 			r.updated_at
 		FROM recipes r
-		WHERE r.name LIKE ?;
+		LIMIT ?
+		OFFSET ?;
 	`)
 
 	if err != nil {
@@ -85,7 +86,7 @@ func (r *RecipeRepository) SearchByName(name string) ([]dto.RecipeForUIDTO, erro
 	}
 	defer stmt.Close()
 
-	rows, err := stmt.Query("%" + name + "%")
+	rows, err := stmt.Query(limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -140,6 +141,102 @@ func (r *RecipeRepository) SearchByName(name string) ([]dto.RecipeForUIDTO, erro
 	}
 
 	return recipes, nil
+}
+
+func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offset int) ([]dto.RecipeForUIDTO, error) {
+	stmt, err := database.Db.Prepare(`
+		SELECT
+			r.id,
+			r.name,
+			r.description,
+			r.difficulty,
+			r.prep_time,
+			r.cook_time,
+			r.rest_time,
+			r.servings,
+			r.rating,
+			r.image_url,
+			r.created_at,
+			r.updated_at
+		FROM recipes r
+		WHERE r.name LIKE ?
+		LIMIT ?
+		OFFSET ?;
+	`)
+
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query("%"+name+"%", convertedPerPage, offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	recipes := make([]dto.RecipeForUIDTO, 0)
+
+	for rows.Next() {
+		recipe := dto.RecipeForUIDTO{}
+		err = rows.Scan(&recipe.Id, &recipe.Name, &recipe.Description, &recipe.Difficulty, &recipe.PrepTime, &recipe.CookTime, &recipe.RestTime, &recipe.Servings, &recipe.Rating, &recipe.ImageUrl, &recipe.CreatedAt, &recipe.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		recipe.Ingredients = []dto.RecipeIngredientForUIDTO{}
+		recipe.Steps = []dto.RecipeStepForUIDTO{}
+		recipe.Tags = []dto.RecipeTagForUIDTO{}
+
+		recipeIngredients, err := joinRecipeIngredients(recipe.Id)
+		if err != nil {
+			return nil, err
+		}
+
+		ingredientIds := make([]int, 0)
+		for _, ingredient := range recipeIngredients {
+			ingredientIds = append(ingredientIds, ingredient.FoodId)
+		}
+
+		recipeMacros, err := calculateMacros(ingredientIds)
+		if err != nil {
+			return nil, err
+		}
+
+		recipe.Ingredients = recipeIngredients
+		recipe.Macros = *recipeMacros
+
+		recipeSteps, err := joinRecipeSteps(recipe.Id)
+		if err != nil {
+			return nil, err
+		}
+
+		recipe.Steps = recipeSteps
+
+		recipeTags, err := joinRecipeTags(recipe.Id)
+		if err != nil {
+			return nil, err
+		}
+
+		recipe.Tags = recipeTags
+
+		recipes = append(recipes, recipe)
+	}
+
+	return recipes, nil
+}
+
+func (r *RecipeRepository) Rate(recipeId int, rating int) error {
+	stmt, err := database.Db.Prepare(`
+		UPDATE recipes SET rating = ? WHERE id = ?;
+	`)
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(rating, recipeId)
+
+	return err
 }
 
 func joinRecipeIngredients(recipeId int) ([]dto.RecipeIngredientForUIDTO, error) {

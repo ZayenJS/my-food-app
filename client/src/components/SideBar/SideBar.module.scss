@@ -1,0 +1,18 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.root {
+}
+
+.nav {
+}
+
+.new_recipe {
+    display: block;
+    padding: 1rem;
+}
+
+.list_top,
+.list_bottom {
+    padding: 1rem;
+    @include mixins.flex($align: flex-start, $justify: space-between, $ff: column nowrap, $gap: 1rem);
+}

@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupFoodRoutes(engine *gin.Engine) {
+func setupFoodRoutes(engine *gin.RouterGroup) {
 	food := engine.Group("/food")
-	food.GET("/", controllers.GetAllFoods)
+	food.GET("", controllers.GetAllFoods)
 }

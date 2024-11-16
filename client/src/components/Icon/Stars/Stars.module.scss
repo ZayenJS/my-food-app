@@ -1,0 +1,6 @@
+@use '../../../assets/scss/partials/mixins.scss' as mixins;
+
+.root {
+    @include mixins.inline-flex($align: center, $justify: center, $gap: 0.1rem);
+    width: fit-content;
+}

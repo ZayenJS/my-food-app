@@ -1,0 +1,12 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.root {
+    @include mixins.flex($align: center, $justify: space-between, $ff: column nowrap, $gap: 0.25rem);
+}
+
+.line {
+    width: 1.25rem;
+    height: 0.125rem;
+    background-color: var(--text-color);
+    border-radius: 0.1rem;
+}

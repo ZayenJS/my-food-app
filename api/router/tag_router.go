@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupTagRoutes(engine *gin.Engine) {
+func setupTagRoutes(engine *gin.RouterGroup) {
 	tag := engine.Group("/tag")
-	tag.GET("/", controllers.GetAllTags)
+	tag.GET("", controllers.GetAllTags)
 }

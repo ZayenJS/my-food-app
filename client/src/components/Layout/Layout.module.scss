@@ -1,0 +1,33 @@
+.root {
+    display: grid;
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 12rem 1fr;
+    grid-template-areas: 'header header' 'sidebar main';
+    height: 100vh;
+}
+
+.root > header {
+    grid-area: header;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+    height: var(--header-height);
+}
+
+.root > aside {
+    grid-area: sidebar;
+    height: calc(100vh - var(--header-height));
+    border-right: 1px solid var(--border-color);
+}
+
+.root > main {
+    grid-area: main;
+    overflow: auto;
+    height: calc(100vh - var(--header-height));
+
+    .search-input-container {
+        &:hover {
+            border-color: var(--accent-color);
+        }
+    }
+}

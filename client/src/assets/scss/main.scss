@@ -1,0 +1,69 @@
+@use 'partials/reset.scss' as *;
+@use 'partials/mixins.scss' as mixins;
+
+:root {
+    --header-height: 52px;
+    --header-background-color: rgb(84, 151, 84);
+    --accent-color: var(--header-background-color);
+    --background-color: #222;
+    --text-color: #fff;
+    --border-color: #666;
+
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.search-input-container {
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 1rem);
+    @include mixins.input-container-styles;
+}
+
+header {
+    background-color: var(--header-background-color);
+    color: var(--text-color);
+
+    .search-input-container {
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 10rem;
+        border-color: transparent;
+
+        &:hover {
+            border-color: transparent;
+        }
+    }
+}
+
+.logo {
+    width: 3rem;
+}
+
+hr {
+    border-color: var(--border-color);
+}
+
+.padded-wrapper-1rem {
+    padding: 1rem;
+}
+
+.star {
+    --background: gold;
+    cursor: pointer;
+    width: 1rem;
+    aspect-ratio: 1;
+    fill: none;
+    stroke: var(--background);
+    transition: all 500ms ease-in-out;
+
+    &:hover,
+    &:nth-child(-n + 1) {
+        fill: var(--background);
+    }
+
+    &.filled {
+        fill: var(--background);
+    }
+}

@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `cook_time` INT NOT NULL,
   `rest_time` INT NOT NULL,
   `servings` INT NOT NULL,
+  `rating` INT DEFAULT NULL,
   `image_url` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP

@@ -1,0 +1,11 @@
+.root {
+    --background: #d00;
+    width: 1rem;
+    aspect-ratio: 1;
+    fill: none;
+    stroke: var(--background);
+}
+
+.filled {
+    fill: var(--background);
+}

@@ -23,6 +23,7 @@ type RecipeForUIDTO struct {
 	CookTime    int                        `json:"cook_time"`
 	RestTime    *int                       `json:"rest_time"`
 	Servings    int                        `json:"servings"`
+	Rating      *int                       `json:"rating"`
 	ImageUrl    string                     `json:"image_url"`
 	Ingredients []RecipeIngredientForUIDTO `json:"ingredients"`
 	Steps       []RecipeStepForUIDTO       `json:"steps"`
@@ -57,4 +58,8 @@ type RecipeMacrosDTO struct {
 	SaturatedPer100g float64 `json:"saturated_per_100g"`
 	FiberPer100g     float64 `json:"fiber_per_100g"`
 	SodiumPer100g    float64 `json:"sodium_per_100g"`
+}
+
+type RateRecipeDTO struct {
+	Rating int `json:"rating" binding:"required"`
 }

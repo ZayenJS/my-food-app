@@ -14,6 +14,7 @@ type Recipe struct {
 	CookTime    int     `json:"cook_time"`
 	RestTime    int     `json:"rest_time"`
 	Servings    int     `json:"servings"`
+	Rating      *int    `json:"rating"`
 	ImageUrl    string  `json:"image_url"`
 	CreatedAt   string  `json:"created_at"`
 	UpdatedAt   *string `json:"updated_at"`
