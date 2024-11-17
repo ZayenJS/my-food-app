@@ -18,10 +18,10 @@ interface Props {
 }
 
 export const Recipe: FC<Props> = ({ data }) => {
-    const link = clientRouter.buildLink(AppRoutes.recipe, { id: data.id });
+    const link = clientRouter.buildLink(AppRoutes.recipe, { params: { id: data.id.toString() } });
 
     return (
-        <div className={classes.root}>
+        <div className={classes.recipe}>
             <Link to={link}>
                 <div className={classes.image_container}>
                     <img src={data.src} alt="" />
@@ -29,12 +29,12 @@ export const Recipe: FC<Props> = ({ data }) => {
                 </div>
                 <h3>{data.title}</h3>
             </Link>
-            <div>
+            <div className={classes.recipe_footer}>
                 <Heart />
                 <Stars
                     rating={data.rating}
                     onSelected={async (rating) => {
-                        const url = apiRouter.buildLink(ApiRoutes.rate_recipe, { id: data.id });
+                        const url = apiRouter.buildLink(ApiRoutes.rate_recipe, { params: { id: data.id.toString() } });
                         const response = await fetch(url, {
                             method: 'POST',
                             headers: {

@@ -1,12 +1,12 @@
 @use '../../assets/scss/partials/mixins.scss' as mixins;
 
-.root {
+.recipes {
     hr {
         margin-block: 1rem;
     }
 }
 
-.search_container {
+.recipes_search_container {
     @include mixins.flex($align: center, $justify: center, $gap: 1rem);
 
     :has(input:focus) {

@@ -53,7 +53,7 @@ export const Stars: FC<Props> = ({ rating, onSelected }) => {
     };
 
     return (
-        <div role="presentation" ref={containerRef} onMouseLeave={handleMouseLeave} className={classes.root}>
+        <div role="presentation" ref={containerRef} onMouseLeave={handleMouseLeave} className={classes.stars}>
             {Array.from({ length: 5 }).map((_, index) => {
                 const isFilled = index < internalRating.current;
 

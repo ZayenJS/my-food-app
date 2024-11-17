@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { buildClassName } from '../../../util';
 
 interface Props {
     index: number;
@@ -14,7 +15,7 @@ export const Star: FC<Props> = ({ index, isFilled, onMouseEnter, onMouseLeave, o
             onMouseEnter={onMouseEnter?.bind(null, index + 1)}
             onMouseLeave={onMouseLeave}
             onClick={onClick?.bind(null, index + 1)}
-            className={['star', isFilled ? 'filled' : ''].join(' ').trim()}
+            className={buildClassName('star', isFilled ? 'filled' : '')}
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg">
             <path

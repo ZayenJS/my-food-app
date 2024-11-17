@@ -29,8 +29,8 @@ func FoodTableName() string {
 	return "foods"
 }
 
-func GetAllFoods(limit int, offset int) ([]Food, error) {
-	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` LIMIT ? OFFSET ?", FoodTableName()))
+func GetAllFoods(limit int, offset int, sort string) ([]Food, error) {
+	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` ORDER BY name %v LIMIT ? OFFSET ?", FoodTableName(), sort))
 
 	if err != nil {
 		return nil, err
@@ -58,8 +58,8 @@ func GetAllFoods(limit int, offset int) ([]Food, error) {
 	return foods, nil
 }
 
-func GetFoodsByName(name string, limit int, offset int) ([]Food, error) {
-	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` WHERE `name` LIKE ? LIMIT ? OFFSET ?", FoodTableName()))
+func GetFoodsByName(name string, limit int, offset int, sort string) ([]Food, error) {
+	stmt, err := database.Db.Prepare(fmt.Sprintf("SELECT * FROM `%v` WHERE `name` LIKE ? ORDER BY name %v LIMIT ? OFFSET ?", FoodTableName(), sort))
 
 	if err != nil {
 		return nil, err

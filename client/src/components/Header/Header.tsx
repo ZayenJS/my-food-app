@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
     return (
-        <header className={classes.root}>
-            <div className={classes.logo_container}>
+        <header className={classes.header}>
+            <div className={classes.header_logo_container}>
                 <Burger />
-                <Link className={classes.logo} to="/">
+                <Link className={classes.header_logo} to="/">
                     <img className="logo" src={logo} alt="" />
                     <h1>My Food App</h1>
                 </Link>

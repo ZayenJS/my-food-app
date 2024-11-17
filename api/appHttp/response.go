@@ -1,4 +1,4 @@
-package response
+package appHttp
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type Response struct {
 	context *gin.Context
 }
 
-func New(c *gin.Context) *Response {
+func NewResponse(c *gin.Context) *Response {
 	return &Response{context: c}
 }
 

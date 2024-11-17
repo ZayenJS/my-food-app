@@ -9,6 +9,7 @@ import { ApiRoutes, apiRouter } from '../../router/apiRouter';
 import recipePlaceholder from '../../assets/images/recipe-placeholder.webp';
 
 import classes from './Recipes.module.scss';
+import { buildClassName } from '../../util';
 
 export const Recipes = () => {
     const [recipes, setRecipes] = useState<RecipeModel[]>([]);
@@ -17,7 +18,7 @@ export const Recipes = () => {
         if (recipes.length > 0) return;
 
         const url = apiRouter.buildLink(ApiRoutes.recipes, {
-            limit: 20,
+            query: { limit: '20' },
         });
 
         fetch(url)
@@ -25,8 +26,8 @@ export const Recipes = () => {
             .then((data: RecipeModel[]) => setRecipes(data));
     }, [recipes]);
     return (
-        <div className={classes.root}>
-            <div className={[classes.search_container, 'padded-wrapper-1rem'].join(' ')}>
+        <div className={classes.recipes}>
+            <div className={buildClassName(classes.recipes_search_container, 'padded-wrapper-1rem')}>
                 <SearchInput placeholder="Rechercher" />
             </div>
 
@@ -38,7 +39,7 @@ export const Recipes = () => {
                     <span>Recettes</span>
                 </h2>
             </div>
-            <div className={[classes.recipes_container, 'padded-wrapper-1rem'].join(' ')}>
+            <div className={buildClassName(classes.recipes_container, 'padded-wrapper-1rem')}>
                 {recipes.map((recipe) => (
                     <Recipe
                         key={recipe.id}

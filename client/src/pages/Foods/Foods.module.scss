@@ -1,0 +1,80 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.foods_search_container {
+    margin-bottom: 1rem;
+
+    > div {
+        max-width: none;
+    }
+}
+
+.foods_title_container {
+    @include mixins.flex($align: center, $justify: space-between, $gap: 1rem);
+    padding: 1rem;
+}
+
+.foods_title {
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
+    font-size: 2rem;
+}
+
+.foods_new_food_icon {
+    path {
+        fill: none;
+        stroke: var(--text-color);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.foods_list_letter {
+    padding: 1rem 0;
+
+    h3 {
+        font-size: 1.5rem;
+        padding-inline: 1rem;
+    }
+
+    hr {
+        margin: 1rem 0;
+    }
+
+    .foods_list_food {
+        @include mixins.grid($align: flex-start, $justify: flex-start, $gap: 2rem, $gtc: repeat(auto-fill, 250px));
+        padding-inline: 1rem;
+
+        li {
+            --background-color-lightness: 5%;
+
+            @include mixins.flex($align: center, $justify: flex-start, $gap: 1rem);
+            position: relative;
+            box-shadow: 2px 2px 5px 0
+                hsla(
+                    var(--background-color-hue),
+                    var(--background-color-saturation),
+                    var(--background-color-lightness),
+                    0.5
+                );
+            border-left: 5px solid var(--main-color);
+
+            a {
+                display: block;
+                padding: 1rem;
+                width: 100%;
+            }
+
+            .feedback {
+                position: absolute;
+                right: 0.5rem;
+                top: 50%;
+                translate: 0 -50%;
+            }
+
+            svg {
+                position: relative;
+                z-index: 50;
+            }
+        }
+    }
+}

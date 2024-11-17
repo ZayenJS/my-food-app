@@ -5,15 +5,15 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/ZayenJS/appHttp"
 	"github.com/ZayenJS/dto"
 	"github.com/ZayenJS/repository"
-	response "github.com/ZayenJS/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateRecipe(c *gin.Context) {
 	var recipeDto dto.CreateRecipeDTO
-	response := response.New(c)
+	response := appHttp.NewResponse(c)
 	if err := c.ShouldBindJSON(&recipeDto); err != nil {
 		response.Error(http.StatusBadRequest, err)
 		return
@@ -31,7 +31,7 @@ func CreateRecipe(c *gin.Context) {
 }
 
 func GetAllRecipes(c *gin.Context) {
-	httpResponse := response.New(c)
+	httpResponse := appHttp.NewResponse(c)
 
 	page := c.DefaultQuery("page", "1")
 	perPage := c.DefaultQuery("per-page", "10")
@@ -77,7 +77,7 @@ func GetAllRecipes(c *gin.Context) {
 }
 
 func RateRecipe(c *gin.Context) {
-	response := response.New(c)
+	response := appHttp.NewResponse(c)
 	recipeId := c.Param("id")
 
 	if recipeId == "" {

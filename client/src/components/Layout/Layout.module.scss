@@ -1,7 +1,7 @@
 .root {
     display: grid;
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 12rem 1fr;
+    grid-template-columns: 14rem 1fr;
     grid-template-areas: 'header header' 'sidebar main';
     height: 100vh;
 }

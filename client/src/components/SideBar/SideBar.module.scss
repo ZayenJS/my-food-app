@@ -1,18 +1,70 @@
 @use '../../assets/scss/partials/mixins.scss' as mixins;
+@use 'sass:color';
 
-.root {
+.sidebar {
 }
 
-.nav {
+.sidebar_nav {
 }
 
-.new_recipe {
+.sidebar_favorite_recipes {
     display: block;
     padding: 1rem;
 }
 
-.list_top,
-.list_bottom {
-    padding: 1rem;
+.sidebar_new_recipe {
+    --background-color-lightness: 25%;
+    --background-color-alpha: 0.5;
+
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
+    font-size: inherit;
+    padding-left: 0.5rem;
+    padding-right: 2rem;
+    background-color: hsla(
+        var(--background-color-hue),
+        var(--background-color-saturation),
+        var(--background-color-lightness),
+        var(--background-color-alpha)
+    );
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    transition: background-color 250ms ease-in-out, border-color 250ms ease-in-out, color 250ms ease-in-out;
+}
+
+.sidebar_link {
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
+}
+
+.sidebar_list_top,
+.sidebar_list_bottom {
     @include mixins.flex($align: flex-start, $justify: space-between, $ff: column nowrap, $gap: 1rem);
+    width: 100%;
+    padding-block: 1rem;
+
+    li {
+        width: 100%;
+
+        a {
+            padding: 0.25rem 1rem;
+        }
+
+        &:has(.active) {
+            --main-color-alpha: 0.2;
+
+            background-color: hsla(
+                var(--main-color-hue),
+                var(--main-color-saturation),
+                var(--main-color-lightness),
+                var(--main-color-alpha)
+            );
+            color: var(--accent-color);
+            font-weight: bold;
+
+            svg path,
+            svg line {
+                stroke: var(--accent-color);
+                stroke-width: 2;
+            }
+        }
+    }
 }

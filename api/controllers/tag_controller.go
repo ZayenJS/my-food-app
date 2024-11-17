@@ -1,13 +1,13 @@
 package controllers
 
 import (
+	"github.com/ZayenJS/appHttp"
 	"github.com/ZayenJS/models"
-	response "github.com/ZayenJS/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllTags(c *gin.Context) {
-	httpResponse := response.New(c)
+	httpResponse := appHttp.NewResponse(c)
 
 	tags, err := models.GetAllTags()
 
@@ -16,5 +16,5 @@ func GetAllTags(c *gin.Context) {
 		return
 	}
 
-	httpResponse.JSON(200, gin.H{"tags": tags})
+	httpResponse.JSON(200, tags)
 }
