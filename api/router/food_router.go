@@ -8,4 +8,5 @@ import (
 func setupFoodRoutes(engine *gin.RouterGroup) {
 	food := engine.Group("/food")
 	food.GET("", controllers.GetAllFoods)
+	food.POST("", controllers.CreateFood)
 }

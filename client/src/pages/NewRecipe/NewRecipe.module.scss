@@ -1,0 +1,59 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.new_recipe {
+    form {
+        margin-block: 2rem;
+    }
+
+    fieldset {
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+
+        legend {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding-inline: 1rem;
+        }
+
+        .new_food_form {
+            @include mixins.flex($align: center, $justify: flex-start, $gap: 1rem);
+            flex-wrap: wrap;
+
+            .new_food_form_input {
+                @include mixins.input-container-styles;
+            }
+        }
+    }
+
+    button {
+        margin-left: auto;
+    }
+}
+
+.field_container {
+    margin-block: 2rem;
+
+    div {
+        @include mixins.flex($ff: column nowrap);
+    }
+}
+
+.general_info_container,
+.time_container {
+    @include mixins.grid($align: center, $justify: flex-start, $gap: 1rem, $gtc: repeat(3, 1fr));
+
+    div {
+        @include mixins.flex($ff: column nowrap);
+    }
+}
+
+.general_info_container {
+    margin-block-start: 1rem;
+    margin-block-end: 2rem;
+}
+
+.image_container {
+    margin-block-end: 1rem;
+}

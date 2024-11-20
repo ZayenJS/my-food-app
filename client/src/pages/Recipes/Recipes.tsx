@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { SearchInput } from '../../components/Form/SearchInput/SearchInput';
 import { Recipe } from './Recipe/Recipe';
 
 import { RecipeModel } from '../../models/recipe';
@@ -10,6 +9,8 @@ import recipePlaceholder from '../../assets/images/recipe-placeholder.webp';
 
 import classes from './Recipes.module.scss';
 import { buildClassName } from '../../util';
+import { RecipeIcon } from '../../components/Icon/RecipeIcon/RecipeIcon';
+import { PageSearch } from '../../components/PageSearch/PageSearch';
 
 export const Recipes = () => {
     const [recipes, setRecipes] = useState<RecipeModel[]>([]);
@@ -27,15 +28,10 @@ export const Recipes = () => {
     }, [recipes]);
     return (
         <div className={classes.recipes}>
-            <div className={buildClassName(classes.recipes_search_container, 'padded-wrapper-1rem')}>
-                <SearchInput placeholder="Rechercher" />
-            </div>
-
-            <hr />
-
+            <PageSearch />
             <div className="padded-wrapper-1rem">
-                <h2>
-                    <span></span>
+                <h2 className="page_title">
+                    <RecipeIcon className="icon-lg" />
                     <span>Recettes</span>
                 </h2>
             </div>

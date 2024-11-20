@@ -69,6 +69,15 @@ header {
     }
 }
 
+input {
+    background-color: var(--background-color);
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem 0.25rem;
+    font-size: 1.25rem;
+}
+
 .logo {
     width: 3rem;
 }
@@ -207,4 +216,9 @@ li {
             padding: 1rem;
         }
     }
+}
+
+.page_title {
+    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
+    font-size: 2rem;
 }

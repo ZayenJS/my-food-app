@@ -10,6 +10,51 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func CreateFood(c *gin.Context) {
+	httpResponse := appHttp.NewResponse(c)
+	/**
+	  TODO: Implement the CreateFood function
+		1. Create the CreateFootDto struct
+		2. Bind the request body to the CreateFootDto struct
+		3. Validate the CreateFootDto struct
+		4. Create a new Food struct
+		5. Assign the values from the CreateFootDto struct to the Food struct
+		6. Instantiate Food Repository
+		7. Call the CreateFood method from the Food Repository
+		8. Handle the error
+		9. Return a 201 status code
+	*/
+
+	// go routine example
+	// dataCh := make(chan bool)
+
+	// var wg sync.WaitGroup
+
+	// wg.Add(1)
+	// go func() {
+	// 	fmt.Println("Start data generation")
+	// 	defer wg.Done()
+	// 	for i := 0; i < 10; i++ {
+	// 		time.Sleep(1 * time.Second)
+
+	// 		dataCh <- true
+	// 	}
+
+	// 	close(dataCh)
+	// }()
+
+	// go func() {
+	// 	fmt.Println("Start data processing")
+	// 	for range dataCh {
+	// 		println("Data received")
+	// 	}
+	// }()
+
+	// wg.Wait()
+
+	httpResponse.JSON(201, gin.H{"test": 1})
+}
+
 func GetAllFoods(c *gin.Context) {
 	httpResponse := appHttp.NewResponse(c)
 

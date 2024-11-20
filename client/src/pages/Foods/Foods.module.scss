@@ -13,11 +13,6 @@
     padding: 1rem;
 }
 
-.foods_title {
-    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
-    font-size: 2rem;
-}
-
 .foods_new_food_icon {
     path {
         fill: none;

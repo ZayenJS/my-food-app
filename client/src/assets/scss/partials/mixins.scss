@@ -89,6 +89,9 @@
         color: inherit;
         border: none;
         width: 100%;
+        font-size: revert;
+        padding: 0;
+        margin: 0;
 
         &::placeholder {
             color: var(--text-color);

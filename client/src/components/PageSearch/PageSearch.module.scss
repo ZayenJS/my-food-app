@@ -1,0 +1,19 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.page_search {
+    hr {
+        margin-block: 1rem;
+    }
+}
+
+.search_container {
+    @include mixins.flex($align: center, $justify: center, $gap: 1rem);
+
+    :has(input:focus) {
+        border-color: var(--accent-color);
+
+        svg {
+            fill: var(--accent-color);
+        }
+    }
+}

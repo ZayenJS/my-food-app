@@ -6,10 +6,10 @@ import { FoodsIcon } from '../../components/Icon/FoodsIcon/FoodsIcon';
 import classes from './Foods.module.scss';
 import { Link } from 'react-router-dom';
 import { MoreVerticalIcon } from '../../components/Icon/moreVerticalIcon/MoreVerticalIcon';
-import { SearchInput } from '../../components/Form/SearchInput/SearchInput';
 import { buildClassName } from '../../util';
 import { PlusIcon } from '../../components/Icon/PlusIcon/PlusIcon';
 import { clientRouter } from '../../router/clientRouter';
+import { PageSearch } from '../../components/PageSearch/PageSearch';
 
 export const Foods: FC = () => {
     const [foods, setFoods] = useState<FoodModelIndexedByLetter>({});
@@ -28,11 +28,9 @@ export const Foods: FC = () => {
 
     return (
         <div>
-            <div className={buildClassName(classes.foods_search_container, 'padded-wrapper-1rem')}>
-                <SearchInput placeholder="Rechercher" />
-            </div>
+            <PageSearch />
             <div className={buildClassName('padded-wrapper-1rem', classes.foods_title_container)}>
-                <h2 className={classes.foods_title}>
+                <h2 className="page_title">
                     <FoodsIcon className="icon-lg" />
                     <span>Aliments</span>
                 </h2>
