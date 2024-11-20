@@ -9,9 +9,9 @@ import (
 )
 
 func Setup() *gin.Engine {
-	isDev := os.Getenv("ENV") == "development"
+	env := os.Getenv("ENV")
 
-	if isDev {
+	if env == "development" || env == "dev" {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)

@@ -1,5 +1,5 @@
 go-migrate.config.json
 build
 API
-**/*.env
+.env.prod
 tmp

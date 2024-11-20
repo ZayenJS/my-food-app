@@ -11,6 +11,8 @@ services:
         ports:
             - 8181:8080
             - 2345:2345
+        env_file:
+            - .env
         depends_on:
             - db
 
