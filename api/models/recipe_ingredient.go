@@ -6,13 +6,13 @@ import (
 )
 
 type RecipeIngredient struct {
-	Id        int     `json:"id"`
-	RecipeId  int     `json:"recipe_id"`
-	FoodId    int     `json:"food_id"`
-	Quantity  int     `json:"quantity"`
-	Unit      string  `json:"unit"`
-	CreatedAt string  `json:"created_at"`
-	UpdatedAt *string `json:"updated_at"`
+	RecipeIngredientId int     `json:"recipe_ingredient_id"`
+	RecipeId           int     `json:"recipe_id"`
+	FoodId             int     `json:"food_id"`
+	Quantity           int     `json:"quantity"`
+	Unit               string  `json:"unit"`
+	CreatedAt          string  `json:"created_at"`
+	UpdatedAt          *string `json:"updated_at"`
 }
 
 func RecipeIngredientTableName() string {

@@ -6,13 +6,13 @@ interface IngredientModel {
 }
 
 interface StepModel {
-    id: number;
+    step_id: number;
     text: string;
     order: number;
 }
 
 interface TagModel {
-    id: number;
+    tag_id: number;
     name: string;
     color: string;
 }
@@ -29,7 +29,7 @@ interface MacrosModel {
 }
 
 export interface RecipeModel {
-    id: number;
+    recipe_id: number;
     name: string;
     description: string;
     difficulty: number;

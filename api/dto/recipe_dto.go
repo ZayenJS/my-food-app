@@ -15,7 +15,7 @@ type CreateRecipeDTO struct {
 }
 
 type RecipeForUIDTO struct {
-	Id          int                        `json:"id"`
+	RecipeId    int                        `json:"recipe_id"`
 	Name        string                     `json:"name"`
 	Description string                     `json:"description"`
 	Difficulty  int                        `json:"difficulty"`

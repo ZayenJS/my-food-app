@@ -13,12 +13,24 @@ export const NewFood: FC = () => {
         const formData = new FormData(event.currentTarget);
         const dataAsObject = Object.fromEntries(formData.entries());
 
+        const data = {
+            ...dataAsObject,
+            calories: parseFloat(dataAsObject.calories.toString()),
+            protein: parseFloat(dataAsObject.protein.toString()),
+            carbs: parseFloat(dataAsObject.carbs.toString()),
+            sugar: parseFloat(dataAsObject.sugar.toString()),
+            fat: parseFloat(dataAsObject.fat.toString()),
+            saturated_fat: parseFloat(dataAsObject.saturated_fat.toString()),
+            fiber: parseFloat(dataAsObject.fiber.toString()),
+            sodium: parseFloat(dataAsObject.sodium.toString()),
+        };
+
         const response = await fetch(url, {
             method,
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(dataAsObject),
+            body: JSON.stringify(data),
         });
 
         if (!response.ok) {
@@ -44,11 +56,11 @@ export const NewFood: FC = () => {
                     <div className={buildClassName(classes.field_container, classes.general_info_container)}>
                         <div>
                             <label htmlFor="name">Nom</label>
-                            <input type="text" id="name" name="name" />
+                            <input type="text" id="name" name="name" value="test" />
                         </div>
                         <div>
                             <label htmlFor="brand">Marque</label>
-                            <input type="text" id="brand" name="brand" />
+                            <input type="text" id="brand" name="brand" value="Carrefour" />
                         </div>
                         <div>
                             <label htmlFor="category">Catégorie</label>
@@ -73,35 +85,35 @@ export const NewFood: FC = () => {
                     <div className={classes.field_container}>
                         <div>
                             <label htmlFor="calories">Calories</label>
-                            <input type="number" id="calories" name="calories" />
+                            <input type="number" id="calories" name="calories" value="127" />
                         </div>
                         <div>
-                            <label htmlFor="proteins">Protéines</label>
-                            <input type="number" id="proteins" name="proteins" />
+                            <label htmlFor="protein">Protéines</label>
+                            <input type="number" id="protein" name="protein" value="20" />
                         </div>
                         <div>
                             <label htmlFor="carbs">Glucides</label>
-                            <input type="number" id="carbs" name="carbs" />
+                            <input type="number" id="carbs" name="carbs" value="65" />
                         </div>
                         <div>
                             <label htmlFor="sugar">Sucre</label>
-                            <input type="number" id="sugar" name="sugar" />
+                            <input type="number" id="sugar" name="sugar" value="11" />
                         </div>
                         <div>
-                            <label htmlFor="fats">Lipides</label>
-                            <input type="number" id="fats" name="fats" />
+                            <label htmlFor="fat">Lipides</label>
+                            <input type="number" id="fat" name="fat" value="5.5" />
                         </div>
                         <div>
-                            <label htmlFor="saturatedFats">Lipides saturés</label>
-                            <input type="number" id="saturatedFats" name="saturatedFats" />
+                            <label htmlFor="saturated_fat">Lipides saturés</label>
+                            <input type="number" id="saturated_fat" name="saturated_fat" value="2.1" />
                         </div>
                         <div>
                             <label htmlFor="fiber">Fibres</label>
-                            <input type="number" id="fiber" name="fiber" />
+                            <input type="number" id="fiber" name="fiber" value="2.1" />
                         </div>
                         <div>
-                            <label htmlFor="salt">Sel</label>
-                            <input type="number" id="salt" name="salt" />
+                            <label htmlFor="sodium">Sel</label>
+                            <input type="number" id="sodium" name="sodium" value="0.75" />
                         </div>
                     </div>
                 </fieldset>

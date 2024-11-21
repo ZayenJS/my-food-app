@@ -5,25 +5,42 @@ import (
 	"strconv"
 
 	"github.com/ZayenJS/appHttp"
+	"github.com/ZayenJS/dto"
 	"github.com/ZayenJS/models"
+	"github.com/ZayenJS/repository"
 	"github.com/ZayenJS/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateFood(c *gin.Context) {
 	httpResponse := appHttp.NewResponse(c)
-	/**
-	  TODO: Implement the CreateFood function
-		1. Create the CreateFootDto struct
-		2. Bind the request body to the CreateFootDto struct
-		3. Validate the CreateFootDto struct
-		4. Create a new Food struct
-		5. Assign the values from the CreateFootDto struct to the Food struct
-		6. Instantiate Food Repository
-		7. Call the CreateFood method from the Food Repository
-		8. Handle the error
-		9. Return a 201 status code
-	*/
+	var createFoodDto dto.CreateFoodDTO
+
+	err := c.ShouldBindJSON(&createFoodDto)
+	if err != nil {
+		httpResponse.Error(400, err)
+		return
+	}
+
+	brandName := createFoodDto.Brand
+	brand, err := repository.NewBrandRepository().GetBrandByName(brandName)
+
+	if brand == nil {
+		// TODO: create brand if not exist
+	}
+
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
+
+	// TODO: handle image and category
+	food, err := repository.NewFoodRepository().Create(&createFoodDto, brand.BrandId)
+
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
 
 	// go routine example
 	// dataCh := make(chan bool)
@@ -52,7 +69,7 @@ func CreateFood(c *gin.Context) {
 
 	// wg.Wait()
 
-	httpResponse.JSON(201, gin.H{"test": 1})
+	httpResponse.JSON(201, food)
 }
 
 func GetAllFoods(c *gin.Context) {

@@ -1,9 +1,9 @@
-INSERT INTO `brands` (`id`, `name`)
+INSERT INTO `brands` (`brand_id`, `name`)
 VALUES
 (1,'Nestle'),
 (2, 'Carrefour');
 
-INSERT INTO `foods` (`id`,`name`, `brand_id`, `calories`, `protein`, `carbs`, `sugar`, `fat`, `saturated_fat`, `fiber`, `sodium`, `image_url`, `category`)
+INSERT INTO `foods` (`food_id`,`name`, `brand_id`, `calories`, `protein`, `carbs`, `sugar`, `fat`, `saturated_fat`, `fiber`, `sodium`, `image_url`, `category`)
 VALUES
 (1, 'Farine T150', 2, 350, 10, 70, 0, 1, 0, 3, 0, '', 'Pâtisserie'),
 (2, 'Sucre', 2, 400, 0, 100, 100, 0, 0, 0, 0, '', 'Pâtisserie'),
@@ -16,7 +16,7 @@ VALUES
 (9, "Erythritol", 2, 0, 0, 0, 0, 0, 0, 0, 0, '', 'Epicerie sucrée'),
 (10, "Farine T110", 2, 300, 10, 60, 0, 1, 0, 3, 0, '', 'Pâtisserie');
 
-INSERT INTO `tags` (`id`, `name`, `color`)
+INSERT INTO `tags` (`tag_id`, `name`, `color`)
 VALUES
 (1, "Dessert", "#F1B"),
 (2, "Epicerie sucrée", "#F94");

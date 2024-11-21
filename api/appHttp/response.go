@@ -21,7 +21,8 @@ func (response *Response) JSON(status int, data interface{}) {
 }
 
 func (response *Response) Error(status int, err error) {
-	isDevMode := config.Get("ENV") == "development"
+	env := config.Get("ENV")
+	isDevMode := env == "development" || env == "dev"
 
 	data := make(map[string]interface{})
 	errorMessage := "An unexpected error occurred"

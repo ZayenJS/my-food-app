@@ -9,7 +9,7 @@ Content-Type: application/json
   "cook_time":30,
   "rest_time":0,
   "servings":6,
-  "image_url":"https://www.example.com/gateau.jpg",
+  "image_url":"",
   "ingredients":[
     {
       "food_id": 7,

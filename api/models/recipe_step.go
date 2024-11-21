@@ -6,7 +6,7 @@ import (
 )
 
 type RecipeStep struct {
-	Id        int     `json:"id"`
+	StepId    int     `json:"step_id"`
 	RecipeId  int     `json:"recipe_id"`
 	Text      string  `json:"text"`
 	Order     int     `json:"order"`
@@ -39,7 +39,7 @@ func (recipeStep *RecipeStep) Save() error {
 		return err
 	}
 
-	stmt, err = database.Db.Prepare("SELECT id FROM recipe_steps WHERE recipe_id = ? AND `order` = ?")
+	stmt, err = database.Db.Prepare("SELECT recipe_step_id FROM recipe_steps WHERE recipe_id = ? AND `order` = ?")
 
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func (recipeStep *RecipeStep) Save() error {
 
 	defer stmt.Close()
 
-	err = stmt.QueryRow(recipeStep.RecipeId, recipeStep.Order).Scan(&recipeStep.Id)
+	err = stmt.QueryRow(recipeStep.RecipeId, recipeStep.Order).Scan(&recipeStep.StepId)
 
 	return err
 }

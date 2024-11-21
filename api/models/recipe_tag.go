@@ -5,7 +5,6 @@ import (
 )
 
 type RecipeTag struct {
-	Id        int     `json:"id"`
 	RecipeId  int     `json:"recipe_id"`
 	TagId     int     `json:"tag_id"`
 	CreatedAt string  `json:"created_at"`

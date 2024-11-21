@@ -6,7 +6,7 @@ import (
 )
 
 type Recipe struct {
-	Id          int     `json:"id"`
+	RecipeId    int     `json:"recipe_id"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Difficulty  int     `json:"difficulty"`
@@ -57,7 +57,7 @@ func (recipe *Recipe) Save() error {
 		return err
 	}
 
-	stmt, err = database.Db.Prepare("SELECT id FROM recipes WHERE name = ? AND description = ?")
+	stmt, err = database.Db.Prepare("SELECT recipe_id FROM recipes WHERE name = ? AND description = ?")
 
 	if err != nil {
 		return err
@@ -65,7 +65,7 @@ func (recipe *Recipe) Save() error {
 
 	defer stmt.Close()
 
-	err = stmt.QueryRow(recipe.Name, recipe.Description).Scan(&recipe.Id)
+	err = stmt.QueryRow(recipe.Name, recipe.Description).Scan(&recipe.RecipeId)
 
 	return err
 }

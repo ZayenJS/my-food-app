@@ -14,18 +14,28 @@ import { PageSearch } from '../../components/PageSearch/PageSearch';
 
 export const Recipes = () => {
     const [recipes, setRecipes] = useState<RecipeModel[]>([]);
+    const [fetched, setFetched] = useState(false);
 
     useEffect(() => {
-        if (recipes.length > 0) return;
+        if (recipes.length > 0 || fetched) return;
 
         const url = apiRouter.buildLink(ApiRoutes.recipes, {
             query: { limit: '20' },
         });
 
         fetch(url)
-            .then((response) => response.json())
-            .then((data: RecipeModel[]) => setRecipes(data));
-    }, [recipes]);
+            .then((response) => {
+                setFetched(true);
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+
+                return response.json();
+            })
+            .then((data: RecipeModel[]) => setRecipes(data))
+            .catch(() => setRecipes([]));
+    }, [recipes, fetched]);
+
     return (
         <div className={classes.recipes}>
             <PageSearch />
@@ -38,9 +48,9 @@ export const Recipes = () => {
             <div className={buildClassName(classes.recipes_container, 'padded-wrapper-1rem')}>
                 {recipes.map((recipe) => (
                     <Recipe
-                        key={recipe.id}
+                        key={recipe.recipe_id}
                         data={{
-                            id: recipe.id,
+                            id: recipe.recipe_id,
                             title: recipe.name,
                             description: recipe.description,
                             isFavorite: false,

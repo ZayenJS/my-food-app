@@ -30,7 +30,7 @@ func (r *RecipeRepository) Create(recipeDto *dto.CreateRecipeDTO) error {
 	}
 
 	for _, ingredientDto := range recipeDto.Ingredients {
-		recipeIngredient := models.RecipeIngredientFromCreateDTO(recipe.Id, &ingredientDto)
+		recipeIngredient := models.RecipeIngredientFromCreateDTO(recipe.RecipeId, &ingredientDto)
 		recipeIngredient.CreatedAt = now
 		err = recipeIngredient.Save()
 
@@ -40,7 +40,7 @@ func (r *RecipeRepository) Create(recipeDto *dto.CreateRecipeDTO) error {
 	}
 
 	for _, stepDto := range recipeDto.Steps {
-		recipeStep := models.RecipeStepFromDTO(recipe.Id, &stepDto)
+		recipeStep := models.RecipeStepFromDTO(recipe.RecipeId, &stepDto)
 		recipeStep.CreatedAt = now
 		err = recipeStep.Save()
 
@@ -50,7 +50,7 @@ func (r *RecipeRepository) Create(recipeDto *dto.CreateRecipeDTO) error {
 	}
 
 	for _, tagId := range recipeDto.Tags {
-		recipeTag := models.RecipeTagFromIds(recipe.Id, tagId)
+		recipeTag := models.RecipeTagFromIds(recipe.RecipeId, tagId)
 		recipeTag.CreatedAt = now
 		err = recipeTag.Save()
 
@@ -65,7 +65,7 @@ func (r *RecipeRepository) Create(recipeDto *dto.CreateRecipeDTO) error {
 func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
-			r.id,
+			r.recipe_id,
 			r.name,
 			r.description,
 			r.difficulty,
@@ -96,7 +96,7 @@ func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, 
 
 	for rows.Next() {
 		recipe := dto.RecipeForUIDTO{}
-		err = rows.Scan(&recipe.Id, &recipe.Name, &recipe.Description, &recipe.Difficulty, &recipe.PrepTime, &recipe.CookTime, &recipe.RestTime, &recipe.Servings, &recipe.ImageUrl, &recipe.CreatedAt, &recipe.UpdatedAt)
+		err = rows.Scan(&recipe.RecipeId, &recipe.Name, &recipe.Description, &recipe.Difficulty, &recipe.PrepTime, &recipe.CookTime, &recipe.RestTime, &recipe.Servings, &recipe.ImageUrl, &recipe.CreatedAt, &recipe.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -105,7 +105,7 @@ func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, 
 		recipe.Steps = []dto.RecipeStepForUIDTO{}
 		recipe.Tags = []dto.RecipeTagForUIDTO{}
 
-		recipeIngredients, err := joinRecipeIngredients(recipe.Id)
+		recipeIngredients, err := joinRecipeIngredients(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
@@ -123,14 +123,14 @@ func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, 
 		recipe.Ingredients = recipeIngredients
 		recipe.Macros = *recipeMacros
 
-		recipeSteps, err := joinRecipeSteps(recipe.Id)
+		recipeSteps, err := joinRecipeSteps(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
 
 		recipe.Steps = recipeSteps
 
-		recipeTags, err := joinRecipeTags(recipe.Id)
+		recipeTags, err := joinRecipeTags(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
@@ -146,7 +146,7 @@ func (r *RecipeRepository) GetAll(limit int, offset int) ([]dto.RecipeForUIDTO, 
 func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offset int) ([]dto.RecipeForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
-			r.id,
+			r.recipe_id,
 			r.name,
 			r.description,
 			r.difficulty,
@@ -179,7 +179,7 @@ func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offse
 
 	for rows.Next() {
 		recipe := dto.RecipeForUIDTO{}
-		err = rows.Scan(&recipe.Id, &recipe.Name, &recipe.Description, &recipe.Difficulty, &recipe.PrepTime, &recipe.CookTime, &recipe.RestTime, &recipe.Servings, &recipe.Rating, &recipe.ImageUrl, &recipe.CreatedAt, &recipe.UpdatedAt)
+		err = rows.Scan(&recipe.RecipeId, &recipe.Name, &recipe.Description, &recipe.Difficulty, &recipe.PrepTime, &recipe.CookTime, &recipe.RestTime, &recipe.Servings, &recipe.Rating, &recipe.ImageUrl, &recipe.CreatedAt, &recipe.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -188,7 +188,7 @@ func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offse
 		recipe.Steps = []dto.RecipeStepForUIDTO{}
 		recipe.Tags = []dto.RecipeTagForUIDTO{}
 
-		recipeIngredients, err := joinRecipeIngredients(recipe.Id)
+		recipeIngredients, err := joinRecipeIngredients(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
@@ -206,14 +206,14 @@ func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offse
 		recipe.Ingredients = recipeIngredients
 		recipe.Macros = *recipeMacros
 
-		recipeSteps, err := joinRecipeSteps(recipe.Id)
+		recipeSteps, err := joinRecipeSteps(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
 
 		recipe.Steps = recipeSteps
 
-		recipeTags, err := joinRecipeTags(recipe.Id)
+		recipeTags, err := joinRecipeTags(recipe.RecipeId)
 		if err != nil {
 			return nil, err
 		}
@@ -228,7 +228,7 @@ func (r *RecipeRepository) SearchByName(name string, convertedPerPage int, offse
 
 func (r *RecipeRepository) Rate(recipeId int, rating int) error {
 	stmt, err := database.Db.Prepare(`
-		UPDATE recipes SET rating = ? WHERE id = ?;
+		UPDATE recipes SET rating = ? WHERE recipe_id = ?;
 	`)
 	if err != nil {
 		return err
@@ -242,12 +242,12 @@ func (r *RecipeRepository) Rate(recipeId int, rating int) error {
 func joinRecipeIngredients(recipeId int) ([]dto.RecipeIngredientForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
-			f.id,
+			f.food_id,
 			ri.quantity,
 			ri.unit,
 			f.name
 		FROM recipe_ingredients ri
-		JOIN foods f ON ri.food_id = f.id
+		JOIN foods f USING(food_id)
 		WHERE ri.recipe_id = ?;
 	`)
 	if err != nil {
@@ -279,7 +279,7 @@ func joinRecipeIngredients(recipeId int) ([]dto.RecipeIngredientForUIDTO, error)
 func joinRecipeSteps(recipeId int) ([]dto.RecipeStepForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
-			rs.id,
+			rs.recipe_step_id,
 			rs.text,
 			rs.order
 		FROM recipe_steps rs
@@ -314,11 +314,11 @@ func joinRecipeSteps(recipeId int) ([]dto.RecipeStepForUIDTO, error) {
 func joinRecipeTags(recipeId int) ([]dto.RecipeTagForUIDTO, error) {
 	stmt, err := database.Db.Prepare(`
 		SELECT
-			t.id,
+			t.tag_id,
 			t.name,
 			t.color
 		FROM recipe_tags rt
-		JOIN tags t ON rt.tag_id = t.id
+		JOIN tags t USING(tag_id)
 		WHERE rt.recipe_id = ?;
 	`)
 	if err != nil {
@@ -361,16 +361,16 @@ func calculateMacros(ingredientIds []int) (*dto.RecipeMacrosDTO, error) {
 	// Join the placeholders into a string like "?, ?, ?"
 	query := fmt.Sprintf(`
 		SELECT
-			ROUND((SUM(f.calories) / COUNT(f.id)), 2),
-			ROUND((SUM(f.protein) / COUNT(f.id)), 2),
-			ROUND((SUM(f.carbs) / COUNT(f.id)), 2),
-			ROUND((SUM(f.sugar) / COUNT(f.id)), 2),
-			ROUND((SUM(f.fat) / COUNT(f.id)), 2),
-			ROUND((SUM(f.saturated_fat) / COUNT(f.id)), 2),
-			ROUND((SUM(f.fiber) / COUNT(f.id)), 2),
-			ROUND((SUM(f.sodium) / COUNT(f.id)), 2)
+			ROUND((SUM(f.calories) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.protein) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.carbs) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.sugar) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.fat) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.saturated_fat) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.fiber) / COUNT(f.food_id)), 2),
+			ROUND((SUM(f.sodium) / COUNT(f.food_id)), 2)
 		FROM foods f
-		WHERE f.id IN (%s);`, strings.Join(placeholders, ","))
+		WHERE f.food_id IN (%s);`, strings.Join(placeholders, ","))
 
 	stmt, err := database.Db.Prepare(query)
 	if err != nil {

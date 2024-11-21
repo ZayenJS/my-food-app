@@ -39,12 +39,12 @@ func GetAllRecipes(c *gin.Context) {
 
 	convertedPage, err := strconv.Atoi(page)
 	if err != nil {
-		httpResponse.Error(500, err)
+		httpResponse.Error(http.StatusInternalServerError, err)
 		return
 	}
 	convertedPerPage, err := strconv.Atoi(perPage)
 	if err != nil {
-		httpResponse.Error(500, err)
+		httpResponse.Error(http.StatusInternalServerError, err)
 		return
 	}
 
@@ -52,11 +52,11 @@ func GetAllRecipes(c *gin.Context) {
 		recipes, err := repository.NewRecipeRepository().SearchByName(name, convertedPerPage, (convertedPage-1)*convertedPerPage)
 
 		if err != nil {
-			httpResponse.Error(500, err)
+			httpResponse.Error(http.StatusInternalServerError, err)
 			return
 		}
 
-		httpResponse.JSON(200, gin.H{"recipes": recipes})
+		httpResponse.JSON(http.StatusOK, gin.H{"recipes": recipes})
 		return
 	}
 

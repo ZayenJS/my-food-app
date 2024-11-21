@@ -7,7 +7,7 @@ import (
 )
 
 type Tag struct {
-	Id        int     `json:"id"`
+	TagId     int     `json:"tag_id"`
 	Name      string  `json:"name"`
 	Color     string  `json:"color"`
 	CreatedAt string  `json:"created_at"`
@@ -35,7 +35,7 @@ func GetAllTags() ([]*Tag, error) {
 
 	for rows.Next() {
 		var tag Tag
-		err := rows.Scan(&tag.Id, &tag.Name, &tag.Color, &tag.CreatedAt, &tag.UpdatedAt)
+		err := rows.Scan(&tag.TagId, &tag.Name, &tag.Color, &tag.CreatedAt, &tag.UpdatedAt)
 
 		if err != nil {
 			return nil, err
