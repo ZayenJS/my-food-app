@@ -1,8 +1,10 @@
 import { FC } from 'react';
+import { RecipeIcon } from '../../components/Icon/RecipeIcon/RecipeIcon';
+
+import { buildClassName } from '../../util';
 
 import classes from './NewRecipe.module.scss';
-import { buildClassName } from '../../util';
-import { RecipeIcon } from '../../components/Icon/RecipeIcon/RecipeIcon';
+import { BarcodeScanner } from '../../components/BarcodeScanner/BarcodeScanner';
 
 export const NewRecipe: FC = () => {
     // const [ingredients, setIngredients] = useState<IngredientModel[]>([]);
@@ -81,6 +83,11 @@ export const NewRecipe: FC = () => {
                       TODO: Add ingredients list (dynamic)
                       Will trigger some sort of popup to search for ingredients
                     */}
+                    {/* <BarcodeScanner
+                        onDetected={(code) => {
+                            console.log('Detected barcode:', code);
+                        }}
+                    /> */}
                 </fieldset>
                 <fieldset>
                     <legend>Étapes</legend>
