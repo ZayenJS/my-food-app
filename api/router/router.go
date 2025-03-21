@@ -27,9 +27,12 @@ func Setup() *gin.Engine {
 		MaxAge:           12 * time.Hour, // Preflight cache duration
 	}))
 
+	engine.Static("/public", "./public")
+
 	apiEndpoint := engine.Group("/api")
 
 	setupFoodRoutes(apiEndpoint)
+	setupBrandRoutes(apiEndpoint)
 	setupRecipeRoutes(apiEndpoint)
 	setupTagRoutes(apiEndpoint)
 

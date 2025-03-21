@@ -1,5 +1,6 @@
 @use 'partials/reset.scss' as *;
 @use 'partials/mixins.scss' as mixins;
+@use 'partials/keyframes.scss' as keyframes;
 
 :root {
     --header-height: 52px;
@@ -31,6 +32,10 @@
 
     --text-color: #fff;
     --border-color: #666;
+
+    --error-color: #721c24;
+    --error-background-color: #f8d7da;
+    --error-border-color: #f5c6cb;
 
     font-family: 'Roboto', sans-serif;
 }
@@ -76,6 +81,32 @@ input {
     color: var(--text-color);
     padding: 0.5rem 0.25rem;
     font-size: 1.25rem;
+}
+
+select {
+    background-color: var(--background-color);
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem 0.25rem;
+    font-size: 1.25rem;
+}
+
+input,
+select,
+textarea {
+    + .error {
+        margin-top: 0.5rem;
+        padding: 0.5rem 0.25rem;
+        color: var(--error-color);
+        background-color: var(--error-background-color);
+        border: 2px solid var(--error-border-color);
+        border-radius: 0.25rem;
+
+        &::first-letter {
+            text-transform: capitalize;
+        }
+    }
 }
 
 .logo {
@@ -221,4 +252,14 @@ li {
 .page_title {
     @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
     font-size: 2rem;
+}
+
+.loading {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: loading-circular 1s linear infinite;
 }

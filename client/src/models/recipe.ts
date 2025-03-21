@@ -1,3 +1,5 @@
+import { TimeStamps } from './timestamps';
+
 interface IngredientModel {
     food_id: number;
     quantity: number;
@@ -28,7 +30,7 @@ interface MacrosModel {
     sodium_per_100g: number;
 }
 
-export interface RecipeModel {
+export interface RecipeModel extends TimeStamps {
     recipe_id: number;
     name: string;
     description: string;
@@ -43,6 +45,4 @@ export interface RecipeModel {
     steps: StepModel[];
     tags: TagModel[];
     macros: MacrosModel;
-    created_at: string;
-    updated_at: string;
 }

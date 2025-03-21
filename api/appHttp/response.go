@@ -2,8 +2,10 @@ package appHttp
 
 import (
 	"fmt"
+	"path/filepath"
 	"runtime"
 
+	"github.com/ZayenJS/appFs"
 	"github.com/ZayenJS/config"
 	"github.com/gin-gonic/gin"
 )
@@ -28,6 +30,8 @@ func (response *Response) Error(status int, err error) {
 	errorMessage := "An unexpected error occurred"
 
 	switch status {
+	case 400:
+		errorMessage = "Bad request"
 	case 404:
 		errorMessage = "Resource not found"
 	case 500:
@@ -42,6 +46,21 @@ func (response *Response) Error(status int, err error) {
 	}
 
 	response.context.JSON(status, data)
+}
+
+func (response *Response) SaveUploadedFile(fieldName string, path string, fileName string) (string, error) {
+	file, err := response.context.FormFile(fieldName)
+
+	if err != nil {
+		return "", err
+	}
+	ext := filepath.Ext(file.Filename)
+	fullPath := fmt.Sprintf("%s/%s%s", path, fileName, ext)
+	appFs.EnsureDirectoryExists(path)
+
+	err = response.context.SaveUploadedFile(file, fullPath)
+
+	return fullPath, err
 }
 
 func printStackTrace() string {

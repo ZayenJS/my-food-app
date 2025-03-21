@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/ZayenJS/appHttp"
 	"github.com/ZayenJS/dto"
@@ -16,17 +17,58 @@ func CreateFood(c *gin.Context) {
 	httpResponse := appHttp.NewResponse(c)
 	var createFoodDto dto.CreateFoodDTO
 
-	err := c.ShouldBindJSON(&createFoodDto)
-	if err != nil {
-		httpResponse.Error(400, err)
+	createFoodDto.Name = c.PostForm("name")
+	createFoodDto.Brand = c.PostForm("brand")
+	createFoodDto.Calories, _ = strconv.ParseFloat(c.PostForm("calories"), 64)
+	createFoodDto.Protein, _ = strconv.ParseFloat(c.PostForm("protein"), 64)
+	createFoodDto.Carbs, _ = strconv.ParseFloat(c.PostForm("carbs"), 64)
+	createFoodDto.Sugar, _ = strconv.ParseFloat(c.PostForm("sugar"), 64)
+	createFoodDto.Fat, _ = strconv.ParseFloat(c.PostForm("fat"), 64)
+	createFoodDto.SaturatedFat, _ = strconv.ParseFloat(c.PostForm("saturated_fat"), 64)
+	createFoodDto.Fiber, _ = strconv.ParseFloat(c.PostForm("fiber"), 64)
+	createFoodDto.Sodium, _ = strconv.ParseFloat(c.PostForm("sodium"), 64)
+
+	createFoodDtoErrors := createFoodDto.GetErrors()
+
+	if len(createFoodDtoErrors) > 0 {
+		data := make(map[string]interface{})
+		data["errors"] = createFoodDtoErrors
+		httpResponse.JSON(http.StatusBadRequest, data)
 		return
 	}
 
-	brandName := createFoodDto.Brand
-	brand, err := repository.NewBrandRepository().GetBrandByName(brandName)
+	uuid, err := utils.GenerateUUIDv4()
 
-	if brand == nil {
-		// TODO: create brand if not exist
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
+
+	imagePath, err := httpResponse.SaveUploadedFile("image", "./public/uploads/foods", uuid)
+
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
+
+	createFoodDto.NormalizeNames()
+	createFoodDto.ImageUrl = imagePath
+
+	brandName := createFoodDto.Brand
+	brandRepository := repository.NewBrandRepository()
+	brand, err := brandRepository.GetBrandByName(brandName)
+
+	if brand.BrandId == 0 {
+		brand := &models.Brand{
+			Name: brandName,
+		}
+
+		_, err = brandRepository.Create(brand)
+
+		if err != nil {
+			httpResponse.Error(500, err)
+			return
+		}
 	}
 
 	if err != nil {
@@ -34,8 +76,18 @@ func CreateFood(c *gin.Context) {
 		return
 	}
 
-	// TODO: handle image and category
-	food, err := repository.NewFoodRepository().Create(&createFoodDto, brand.BrandId)
+	foodRepository := repository.NewFoodRepository()
+	food, _ := foodRepository.GetFoodByNameAndBrand(createFoodDto.Name, brand.Name)
+
+	if food != nil {
+		data := make(map[string]interface{})
+		data["name"] = "food with the same name already exists"
+		httpResponse.JSON(400, data)
+		return
+	}
+
+	// TODO: handle image
+	food, err = foodRepository.Create(&createFoodDto, brand.BrandId)
 
 	if err != nil {
 		httpResponse.Error(500, err)
@@ -69,7 +121,10 @@ func CreateFood(c *gin.Context) {
 
 	// wg.Wait()
 
-	httpResponse.JSON(201, food)
+	data := make(map[string]interface{})
+	data[strings.ToLower(string(food.Name[0]))] = food
+
+	httpResponse.JSON(201, data)
 }
 
 func GetAllFoods(c *gin.Context) {
@@ -93,8 +148,9 @@ func GetAllFoods(c *gin.Context) {
 
 	query := c.Query("name")
 
+	foodRepository := repository.NewFoodRepository()
 	if query != "" {
-		foods, err := models.GetFoodsByName(query, convertedPerPage, (convertedPage-1)*convertedPerPage, sort)
+		foods, err := foodRepository.GetFoodsByName(query, convertedPerPage, (convertedPage-1)*convertedPerPage, sort)
 
 		if err != nil {
 			httpResponse.Error(500, err)
@@ -110,7 +166,7 @@ func GetAllFoods(c *gin.Context) {
 		return
 	}
 
-	foods, err := models.GetAllFoods(convertedPerPage, (convertedPage-1)*convertedPerPage, sort)
+	foods, err := foodRepository.GetAllFoods(convertedPerPage, (convertedPage-1)*convertedPerPage, sort)
 
 	if err != nil {
 		httpResponse.Error(500, err)

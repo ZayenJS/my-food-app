@@ -68,8 +68,8 @@ func GetAllRecipes(c *gin.Context) {
 	}
 
 	if len(recipes) == 0 {
-		err = errors.New("no recipes found")
-		httpResponse.Error(http.StatusNotFound, err)
+		data := make([]map[string]interface{}, 0)
+		httpResponse.JSON(http.StatusOK, data)
 		return
 	}
 

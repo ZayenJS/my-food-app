@@ -21,9 +21,11 @@
 }
 
 .root > main {
+    position: relative;
     grid-area: main;
     overflow: auto;
     height: calc(100vh - var(--header-height));
+    scrollbar-gutter: stable;
 
     .search-input-container {
         &:hover {

@@ -5,6 +5,8 @@ export enum ApiRoutes {
     rate_recipe = 'rate_recipe',
 
     foods = 'foods',
+
+    brands = 'brands',
 }
 
 class ApiRouter extends BaseRouter<ApiRoutes> {
@@ -14,6 +16,7 @@ class ApiRouter extends BaseRouter<ApiRoutes> {
         recipes: { path: `${this.url}/recipe` },
         rate_recipe: { path: `${this.url}/recipe/:id/rate` },
         foods: { path: `${this.url}/food` },
+        brands: { path: `${this.url}/brand` },
     };
 }
 

@@ -9,21 +9,15 @@ import { Layout } from './components/Layout/Layout.tsx';
 import { clientRouter, AppRoutes } from './router/router.ts';
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
-                <Layout>
-                    <Routes>
-                        {Object.entries(clientRouter.routes).map(([key, value]) => (
-                            <Route
-                                key={key}
-                                path={clientRouter.buildLink(key as AppRoutes)}
-                                Component={value.component}
-                            />
-                        ))}
-                    </Routes>
-                </Layout>
-            </BrowserRouter>
-        </Provider>
-    </StrictMode>,
+    <Provider store={store}>
+        <BrowserRouter>
+            <Layout>
+                <Routes>
+                    {Object.entries(clientRouter.routes).map(([key, value]) => (
+                        <Route key={key} path={clientRouter.buildLink(key as AppRoutes)} Component={value.component} />
+                    ))}
+                </Routes>
+            </Layout>
+        </BrowserRouter>
+    </Provider>,
 );

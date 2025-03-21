@@ -1,6 +1,11 @@
 @use '../../assets/scss/partials/mixins.scss' as mixins;
 
 .page_search {
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    z-index: 1;
+
     hr {
         margin-block: 1rem;
     }

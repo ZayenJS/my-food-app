@@ -1,9 +1,9 @@
 # These commands will only be used during development (usernames and passwords that might be used here are not secure and will be changed in production)
-db_connect:
+db-connect:
 	echo "Connecting to database..."
 	@docker compose exec db mysql -umy_food_app -pmy_food_app my_food_app
 
-build_api_bin:
+build-api-bin:
 	@echo "Building API binary..."
 	@start_time=$$(date +%s%N); \
 	cd api && go build -o ./build/api .; \

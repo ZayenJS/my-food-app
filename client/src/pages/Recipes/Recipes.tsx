@@ -11,10 +11,13 @@ import classes from './Recipes.module.scss';
 import { buildClassName } from '../../util';
 import { RecipeIcon } from '../../components/Icon/RecipeIcon/RecipeIcon';
 import { PageSearch } from '../../components/PageSearch/PageSearch';
+import { PageLoader } from '../../components/PageLoader/PageLoader';
+import { usePageLoading } from '../../hooks/usePageLoading';
 
 export const Recipes = () => {
     const [recipes, setRecipes] = useState<RecipeModel[]>([]);
     const [fetched, setFetched] = useState(false);
+    const [pageLoading, setPageLoading] = usePageLoading();
 
     useEffect(() => {
         if (recipes.length > 0 || fetched) return;
@@ -33,10 +36,18 @@ export const Recipes = () => {
                 return response.json();
             })
             .then((data: RecipeModel[]) => setRecipes(data))
-            .catch(() => setRecipes([]));
+            .catch(() => {
+                setRecipes([]);
+            })
+            .finally(() => {
+                setPageLoading(false);
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [recipes, fetched]);
 
-    return (
+    return pageLoading ? (
+        <PageLoader />
+    ) : (
         <div className={classes.recipes}>
             <PageSearch />
             <div className="padded-wrapper-1rem">
