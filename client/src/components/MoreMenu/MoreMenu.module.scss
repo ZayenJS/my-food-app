@@ -1,0 +1,72 @@
+@use '../../assets/scss/partials/mixins.scss' as mixins;
+
+.root {
+  position: relative;
+}
+
+.more_menu {
+  --background-color-lightness: 14%;
+  --background-color: hsla(
+    var(--background-color-hue),
+    var(--background-color-saturation),
+    var(--background-color-lightness),
+    var(--background-color-alpha)
+  );
+
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+  max-width: 300px;
+  overflow: hidden;
+  transition: all 250ms;
+  scale: 0;
+  transform-origin: top right;
+  opacity: 0;
+  pointer-events: none;
+
+  &.show {
+    scale: 1;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menu {
+    li {
+      border: none;
+      box-shadow: none;
+      width: 100%;
+
+      button {
+        width: 100%;
+        text-align: left;
+        padding: 0.25rem 0.5rem;
+        transition: all 250ms ease-in-out;
+
+        &:hover {
+          background-color: var(--main-color);
+          color: var(--text-color);
+        }
+
+        &:has(.loading) {
+          @include mixins.flex($align: center, $justify: center);
+        }
+
+        .loading {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+}

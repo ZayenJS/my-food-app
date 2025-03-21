@@ -3,263 +3,258 @@
 @use 'partials/keyframes.scss' as keyframes;
 
 :root {
-    --header-height: 52px;
+  --header-height: 52px;
 
-    // Colors
-    --main-color-hue: 120;
-    --main-color-saturation: 29%;
-    --main-color-lightness: 46%;
-    --main-color-alpha: 1;
-    --main-color: hsla(
-        var(--main-color-hue),
-        var(--main-color-saturation),
-        var(--main-color-lightness),
-        var(--main-color-alpha)
-    );
+  // Colors
+  --main-color-hue: 120;
+  --main-color-saturation: 29%;
+  --main-color-lightness: 46%;
+  --main-color-alpha: 1;
+  --main-color: hsla(
+    var(--main-color-hue),
+    var(--main-color-saturation),
+    var(--main-color-lightness),
+    var(--main-color-alpha)
+  );
 
-    --accent-color: var(--main-color);
+  --accent-color: var(--main-color);
 
-    --background-color-hue: 0;
-    --background-color-saturation: 0%;
-    --background-color-lightness: 13%;
-    --background-color-alpha: 1;
-    --background-color: hsla(
-        var(--background-color-hue),
-        var(--background-color-saturation),
-        var(--background-color-lightness),
-        var(--background-color-alpha)
-    );
+  --background-color-hue: 0;
+  --background-color-saturation: 0%;
+  --background-color-lightness: 13%;
+  --background-color-alpha: 1;
+  --background-color: hsla(
+    var(--background-color-hue),
+    var(--background-color-saturation),
+    var(--background-color-lightness),
+    var(--background-color-alpha)
+  );
 
-    --text-color: #fff;
-    --border-color: #666;
+  --text-color: #fff;
+  --border-color: #666;
 
-    --error-color: #721c24;
-    --error-background-color: #f8d7da;
-    --error-border-color: #f5c6cb;
+  --error-color: #721c24;
+  --error-background-color: #f8d7da;
+  --error-border-color: #f5c6cb;
 
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 button {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .search-input-container {
-    @include mixins.flex($align: center, $justify: flex-start, $gap: 1rem);
-    @include mixins.input-container-styles;
+  @include mixins.flex($align: center, $justify: flex-start, $gap: 1rem);
+  @include mixins.input-container-styles;
 }
 
 header {
-    background-color: var(--main-color);
-    color: var(--text-color);
+  background-color: var(--main-color);
+  color: var(--text-color);
 
-    .search-input-container {
-        background-color: rgba(0, 0, 0, 0.25);
-        border-radius: 10rem;
-        border-color: transparent;
+  .search-input-container {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 10rem;
+    border-color: transparent;
 
-        &:hover {
-            border-color: transparent;
-        }
+    &:hover {
+      border-color: transparent;
     }
+  }
 }
 
 input {
-    background-color: var(--background-color);
-    border: none;
-    border-bottom: 2px solid var(--border-color);
-    color: var(--text-color);
-    padding: 0.5rem 0.25rem;
-    font-size: 1.25rem;
+  background-color: var(--background-color);
+  border: none;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-color);
+  padding: 0.5rem 0.25rem;
+  font-size: 1.25rem;
 }
 
 select {
-    background-color: var(--background-color);
-    border: none;
-    border-bottom: 2px solid var(--border-color);
-    color: var(--text-color);
-    padding: 0.5rem 0.25rem;
-    font-size: 1.25rem;
+  background-color: var(--background-color);
+  border: none;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-color);
+  padding: 0.5rem 0.25rem;
+  font-size: 1.25rem;
 }
 
 input,
 select,
 textarea {
-    + .error {
-        margin-top: 0.5rem;
-        padding: 0.5rem 0.25rem;
-        color: var(--error-color);
-        background-color: var(--error-background-color);
-        border: 2px solid var(--error-border-color);
-        border-radius: 0.25rem;
+  + .error {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.25rem;
+    color: var(--error-color);
+    background-color: var(--error-background-color);
+    border: 2px solid var(--error-border-color);
+    border-radius: 0.25rem;
 
-        &::first-letter {
-            text-transform: capitalize;
-        }
+    &::first-letter {
+      text-transform: capitalize;
     }
+  }
 }
 
 .logo {
-    width: 3rem;
+  width: 3rem;
 }
 
 hr {
-    border-color: var(--border-color);
+  border-color: var(--border-color);
 }
 
 .padded-wrapper-1rem {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .star {
-    --background: gold;
-    cursor: pointer;
-    width: 1rem;
-    aspect-ratio: 1;
-    fill: none;
-    stroke: var(--background);
-    transition: all 500ms ease-in-out;
+  --background: gold;
+  cursor: pointer;
+  width: 1rem;
+  aspect-ratio: 1;
+  fill: none;
+  stroke: var(--background);
+  transition: all 500ms ease-in-out;
 
-    &:hover,
-    &:nth-child(-n + 1) {
-        fill: var(--background);
-    }
+  &:hover,
+  &:nth-child(-n + 1) {
+    fill: var(--background);
+  }
 
-    &.filled {
-        fill: var(--background);
-    }
+  &.filled {
+    fill: var(--background);
+  }
 }
 
 li {
-    &:has(a.active) {
-        .foods_icon {
-            fill: var(--accent-color);
-        }
+  &:has(a.active) {
+    .foods_icon {
+      fill: var(--accent-color);
     }
+  }
 }
 
 .icon {
-    &-xs {
-        width: 1rem;
-        height: 1rem;
-    }
+  &-xs {
+    width: 1rem;
+    height: 1rem;
+  }
 
-    &-sm {
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-    &-md {
-        width: 2rem;
-        height: 2rem;
-    }
+  &-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &-md {
+    width: 2rem;
+    height: 2rem;
+  }
 
-    &-lg {
-        width: 3rem;
-        height: 3rem;
-    }
+  &-lg {
+    width: 3rem;
+    height: 3rem;
+  }
 
-    &-xl {
-        width: 4rem;
-        height: 4rem;
-    }
+  &-xl {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 .button {
-    @include mixins.flex($align: center, $justify: center, $gap: 0.25rem);
-    cursor: pointer;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-    background-color: var(--main-color);
-    color: var(--text-color);
-    border: 2px solid var(--main-color);
-    transition: all 250ms ease-in-out;
+  @include mixins.flex($align: center, $justify: center, $gap: 0.25rem);
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  background-color: var(--main-color);
+  color: var(--text-color);
+  border: 2px solid var(--main-color);
+  transition: all 250ms ease-in-out;
 
-    &:hover {
-        --background-color-lightness: calc(var(--main-color-lightness) + 5%);
-        background-color: hsla(
-            var(--main-color-hue),
-            var(--main-color-saturation),
-            var(--background-color-lightness),
-            var(--main-color-alpha)
-        );
-    }
+  &:hover {
+    --background-color-lightness: calc(var(--main-color-lightness) + 5%);
+    background-color: hsla(
+      var(--main-color-hue),
+      var(--main-color-saturation),
+      var(--background-color-lightness),
+      var(--main-color-alpha)
+    );
+  }
 
-    &.active {
-        background-color: transparent;
-        color: var(--main-color);
-    }
+  &.active {
+    background-color: transparent;
+    color: var(--main-color);
+  }
 }
 
 .feedback {
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
 
-    &:before,
+  &:before,
+  &:after {
+    box-sizing: content-box;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    background-color: transparent;
+    z-index: 1;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    transition: all 250ms ease-in-out;
+  }
+
+  &:after {
+    padding: 0;
+    transform-origin: center;
+    background-color: hsla(var(--main-color-hue), var(--main-color-saturation), var(--main-color-lightness), 0.25);
+  }
+
+  &:hover {
+    &:before {
+      background-color: hsla(var(--main-color-hue), var(--main-color-saturation), var(--main-color-lightness), 0.25);
+    }
+  }
+
+  &:focus-visible {
     &:after {
-        box-sizing: content-box;
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 1rem;
-        background-color: transparent;
-        z-index: 1;
-        border-radius: 50%;
-        aspect-ratio: 1;
-        transition: all 250ms ease-in-out;
+      padding: 1rem;
     }
-
-    &:after {
-        padding: 0;
-        transform-origin: center;
-        background-color: hsla(var(--main-color-hue), var(--main-color-saturation), var(--main-color-lightness), 0.25);
-    }
-
-    &:hover {
-        &:before {
-            background-color: hsla(
-                var(--main-color-hue),
-                var(--main-color-saturation),
-                var(--main-color-lightness),
-                0.25
-            );
-        }
-    }
-
-    &:focus-visible {
-        &:after {
-            padding: 1rem;
-        }
-    }
+  }
 }
 
 .page_title {
-    @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
-    font-size: 2rem;
+  @include mixins.flex($align: center, $justify: flex-start, $gap: 0.5rem);
+  font-size: 2rem;
 }
 
 .loading {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #3498db;
-    border-radius: 50%;
-    animation: loading-circular 1s linear infinite;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--text-color);
+  border-top: 2px solid var(--accent-color);
+  border-radius: 50%;
+  animation: loading-circular 1s linear infinite;
 }

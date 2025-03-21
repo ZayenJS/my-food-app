@@ -2,8 +2,8 @@ package appHttp
 
 import (
 	"fmt"
-	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/ZayenJS/appFs"
 	"github.com/ZayenJS/config"
@@ -54,7 +54,7 @@ func (response *Response) SaveUploadedFile(fieldName string, path string, fileNa
 	if err != nil {
 		return "", err
 	}
-	ext := filepath.Ext(file.Filename)
+	ext := strings.Split(file.Filename, ".")[1]
 	fullPath := fmt.Sprintf("%s/%s%s", path, fileName, ext)
 	appFs.EnsureDirectoryExists(path)
 

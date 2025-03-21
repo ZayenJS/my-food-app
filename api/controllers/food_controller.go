@@ -52,7 +52,7 @@ func CreateFood(c *gin.Context) {
 	}
 
 	createFoodDto.NormalizeNames()
-	createFoodDto.ImageUrl = imagePath
+	createFoodDto.ImageUrl = strings.Split(imagePath, ".")[1]
 
 	brandName := createFoodDto.Brand
 	brandRepository := repository.NewBrandRepository()
@@ -179,4 +179,25 @@ func GetAllFoods(c *gin.Context) {
 	}
 
 	httpResponse.JSON(200, foods)
+}
+
+func DeleteFoodById(c *gin.Context) {
+	httpResponse := appHttp.NewResponse(c)
+
+	id, err := strconv.Atoi(c.Param("id"))
+
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
+
+	foodRepository := repository.NewFoodRepository()
+	err = foodRepository.DeleteById(id)
+
+	if err != nil {
+		httpResponse.Error(500, err)
+		return
+	}
+
+	httpResponse.JSON(204, nil)
 }

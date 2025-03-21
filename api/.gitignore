@@ -3,3 +3,4 @@ build
 API
 .env.prod
 tmp
+public/uploads

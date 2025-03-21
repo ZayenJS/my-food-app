@@ -83,6 +83,13 @@ func (r *FoodRepository) Create(foodDto *dto.CreateFoodDTO, brandId int) (*model
 	return food, err
 }
 
+func (r *FoodRepository) DeleteById(foodId int) error {
+	stmt := fmt.Sprintf("DELETE FROM `%v` WHERE `food_id` = ?", models.FoodTableName())
+	_, err := database.Db.Exec(stmt, foodId)
+
+	return err
+}
+
 func (r *FoodRepository) GetFoodByName(name string) (*models.Food, error) {
 	food := &models.Food{}
 	foods, err := r.GetFoodsByName(name, 1, 0, "asc")

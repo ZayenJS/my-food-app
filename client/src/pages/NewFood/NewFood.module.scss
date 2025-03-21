@@ -1,42 +1,77 @@
 @use '../../assets/scss/partials/mixins.scss' as mixins;
 
 .new_food {
-    form {
-        margin-block: 2rem;
-    }
+  form {
+    margin-block: 2rem;
+  }
 
-    fieldset {
-        border: 1px solid var(--border-color);
-        border-radius: 5px;
-        padding: 1rem;
-        margin-bottom: 1rem;
+  fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 
-        legend {
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding-inline: 1rem;
-        }
+    legend {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-inline: 1rem;
     }
+  }
 
-    button {
-        margin-left: auto;
-    }
+  input[type='file'] {
+    display: none;
+  }
+
+  button {
+    margin-left: auto;
+  }
 }
 
 .field_container {
-    @include mixins.grid($align: flex-start, $justify: center, $gap: 1rem, $gtc: repeat(2, 1fr));
-    margin-block: 1rem;
+  @include mixins.grid($align: flex-start, $justify: center, $gap: 1rem, $gtc: repeat(2, 1fr));
+  margin-block: 1rem;
 
-    div {
-        @include mixins.flex($ff: column nowrap);
-    }
+  div {
+    @include mixins.flex($ff: column nowrap);
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .general_info_container {
-    grid-template-columns: repeat(2, 1fr);
-    margin-block: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin-block: 1rem;
 }
 
 .image_container {
-    margin-block-end: 1rem;
+  margin-block-end: 1rem;
+}
+
+.img_preview {
+  position: relative;
+  max-width: 15rem;
+
+  img {
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  button {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    width: 1.75rem;
+    height: 1.75rem;
+    @include mixins.flex($align: center, $justify: center);
+
+    svg {
+      width: 1.5rem;
+      fill: var(--accent-color);
+    }
+  }
 }
