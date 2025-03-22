@@ -33,9 +33,38 @@
   --text-color: #fff;
   --border-color: #666;
 
-  --error-color: #721c24;
-  --error-background-color: #f8d7da;
-  --error-border-color: #f5c6cb;
+  --error-color-hue: 354;
+  --error-color-saturation: 61%;
+  --error-color-lightness: 28%;
+  --error-color-alpha: 1;
+  --error-color: hsla(
+    var(--error-color-hue),
+    var(--error-color-saturation),
+    var(--error-color-lightness),
+    var(--error-color-alpha)
+  );
+
+  --error-background-color-hue: 355;
+  --error-background-color-saturation: 70%;
+  --error-background-color-lightness: 91%;
+  --error-background-color-alpha: 1;
+  --error-background-color: hsla(
+    var(--error-background-color-hue),
+    var(--error-background-color-saturation),
+    var(--error-background-color-lightness),
+    var(--error-background-color-alpha)
+  );
+
+  --error-border-color-hue: 354;
+  --error-border-color-saturation: 70%;
+  --error-border-color-lightness: 87%;
+  --error-border-color-alpha: 1;
+  --error-border-color: hsla(
+    var(--error-border-color-hue),
+    var(--error-border-color-saturation),
+    var(--error-border-color-lightness),
+    var(--error-border-color-alpha)
+  );
 
   font-family: 'Roboto', sans-serif;
 }

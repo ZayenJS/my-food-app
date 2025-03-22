@@ -29,7 +29,7 @@ export const Foods: FC = () => {
 
     const filtered = Object.entries(foods).reduce<FoodModelIndexedByLetter>(
       (acc: FoodModelIndexedByLetter, [letter, foods]) => {
-        const filteredFoods = foods.filter((food) => food.name.toLowerCase().includes(pageSearch.toLowerCase()));
+        const filteredFoods = foods.filter(food => food.name.toLowerCase().includes(pageSearch.toLowerCase()));
 
         if (filteredFoods.length > 0) {
           acc[letter as Letter] = filteredFoods;
@@ -72,7 +72,7 @@ export const Foods: FC = () => {
             <h3>{letter.toUpperCase()}</h3>
             <hr />
             <ul className={classes.foods_list_food}>
-              {foods.map((food) => (
+              {foods.map(food => (
                 <li key={food.food_id}>
                   <Link to="" className={classes.food_name}>
                     <span>{food.name}</span>

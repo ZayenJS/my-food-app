@@ -1,0 +1,123 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+  transition: opacity 250ms;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.overlay,
+.modal,
+.modal svg,
+.cancel {
+  &.loading {
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+.modal {
+  display: block;
+  border: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 5px;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.modal h2 {
+  padding-inline: 1.5rem;
+  padding-top: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.modal p {
+  margin: 0;
+  margin-block: 1rem;
+  padding-inline: 1.5rem;
+}
+
+.modal button {
+  margin-top: 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-width: 1.5rem;
+
+  svg {
+    cursor: pointer;
+    fill: var(--accent-color);
+
+    &.loading {
+      opacity: 0.5;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-inline: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+.cancel {
+  --error-color-lightness: 40%;
+  --error-color: hsla(
+    var(--error-color-hue),
+    var(--error-color-saturation),
+    var(--error-color-lightness),
+    var(--error-color-alpha)
+  );
+
+  background-color: var(--error-color);
+  color: white;
+
+  border-color: var(--error-color);
+
+  &:hover {
+    background-color: hsl(
+      var(--error-color-hue),
+      var(--error-color-saturation),
+      calc(var(--error-color-lightness) + 5%)
+    );
+  }
+
+  &.loading {
+    opacity: 0.5;
+  }
+}
+
+.confirm {
+  background-color: var(--main-color);
+  color: white;
+}

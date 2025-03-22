@@ -1,13 +1,13 @@
-import { FC, useCallback, useEffect, useId, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useId, useState } from 'react';
 import { buildClassName } from '../../util';
 import { MoreVerticalIcon } from '../Icon/moreVerticalIcon/MoreVerticalIcon';
 
 import classes from './MoreMenu.module.scss';
 import { useMoreMenu } from '../../hooks/useMoreMenu';
-import { LoadingButton } from '../LoadingButton/LoadingButton';
 import { apiRouter, ApiRoutes } from '../../router/router';
 import { useAppDispatch } from '../../store';
 import { deleteFood } from '../../store/actions/food.action';
+import { ConfirmModal } from '../ConfirmModal/ConfirmModal';
 
 interface Props {
   classNames?: string[];
@@ -17,12 +17,12 @@ interface Props {
 export const MoreMenu: FC<Props> = ({ classNames, foodId }) => {
   const id = useId();
   const [activeMenuId, setActiveMenuId] = useMoreMenu();
+
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
   const appDispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState(false);
   const showMenu = activeMenuId === id;
-
-  const loadingButtonRef = useRef<HTMLButtonElement>(null);
 
   const clickOutsideHandler = useCallback(
     (e: MouseEvent) => {
@@ -45,36 +45,17 @@ export const MoreMenu: FC<Props> = ({ classNames, foodId }) => {
     setActiveMenuId(showMenu ? null : id);
   };
 
-  const changeLoadingButtonStatus = (status: boolean) => {
-    const buttonWidth = loadingButtonRef.current?.offsetWidth;
-    const buttonHeight = loadingButtonRef.current?.offsetHeight;
-
-    if (!loadingButtonRef.current) {
-      setLoading(status);
-      return;
-    }
-
-    if (status) {
-      loadingButtonRef.current.style.width = `${buttonWidth}px`;
-      loadingButtonRef.current.style.height = `${buttonHeight}px`;
-    } else {
-      loadingButtonRef.current.style.width = ``;
-      loadingButtonRef.current.style.height = ``;
-    }
-
-    setLoading(status);
-  };
-
   const onDeleteHandler = async () => {
-    changeLoadingButtonStatus(true);
-
     try {
       await fetch(apiRouter.buildLink(ApiRoutes.delete_food, { params: { id: foodId.toString() } }), {
         method: 'DELETE',
       });
       appDispatch(deleteFood(foodId));
-    } finally {
-      changeLoadingButtonStatus(false);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
     }
   };
 
@@ -90,19 +71,24 @@ export const MoreMenu: FC<Props> = ({ classNames, foodId }) => {
             <button>Edit</button>
           </li>
           <li>
-            <LoadingButton
+            <button
               type="button"
-              ref={loadingButtonRef}
-              classNames={{
-                loading: buildClassName('loading', classes.loading),
+              onClick={() => {
+                setDeleteModalVisible(true);
+                onShowMenuHandler();
               }}
-              loading={loading}
-              onClick={onDeleteHandler}>
+            >
               Delete
-            </LoadingButton>
+            </button>
           </li>
         </ul>
       </div>
+      <ConfirmModal
+        text="Voulez-vous vraiment supprimer cet aliment ?"
+        visible={deleteModalVisible}
+        onConfirm={onDeleteHandler}
+        onCancel={setDeleteModalVisible.bind(this, false)}
+      />
     </div>
   );
 };
